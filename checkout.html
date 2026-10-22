@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZAYRO STORE — Checkout</title>
+<meta name="description" content="ZAYRO STORE — إتمام الطلب · Checkout.">
+<meta property="og:title" content="ZAYRO STORE — Checkout">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0a0a0c">
+<link rel="stylesheet" href="styles.css">
+<script>
+  try { var l = localStorage.getItem("zayro_lang"); if (l === "en") { document.documentElement.lang = "en"; document.documentElement.dir = "ltr"; document.documentElement.setAttribute("data-lang", "en"); } } catch (e) {}
+</script>
+</head>
+<body>
+<header id="siteHeader"></header>
+<main>
+  <div class="page-wrap">
+    <h1 data-i18n="coTitle">إتمام الطلب</h1>
+    <p class="sub" data-i18n="coNote">بالضغط على تأكيد الطلب: يُنشأ طلب محلي بحالة «بانتظار التحقق من الدفع» وتُفتح روابط دفع NOWPayments لكل منتج. طلبك لا يُعتبر مؤكداً إلا بعد تحقق نظامنا من الدفع فعلياً (مرحلة الخادم) — لا تدفع مرتين لنفس الطلب.</p>
+    <div id="coBlocked"></div>
+    <form class="form-card" id="coForm" novalidate>
+      <h2 style="margin-bottom:18px" data-i18n="coShipTitle">بيانات الشحن / التواصل</h2>
+      <label for="coName" data-i18n="coName">الاسم الكامل</label>
+      <input id="coName" type="text" autocomplete="name" maxlength="80">
+      <label for="coEmail" data-i18n="coEmail">البريد الإلكتروني</label>
+      <input id="coEmail" type="email" autocomplete="email" maxlength="80">
+      <label for="coPhone" data-i18n="coPhone">رقم الجوال</label>
+      <input id="coPhone" type="tel" autocomplete="tel" maxlength="20">
+      <label for="coCountry" data-i18n="coCountry">الدولة</label>
+      <select id="coCountry">
+        <option value="">—</option>
+        <option value="SA">Saudi Arabia — السعودية</option>
+        <option value="AE">UAE — الإمارات</option>
+        <option value="KW">Kuwait — الكويت</option>
+        <option value="QA">Qatar — قطر</option>
+        <option value="BH">Bahrain — البحرين</option>
+        <option value="OM">Oman — عُمان</option>
+        <option value="IQ">Iraq — العراق</option>
+        <option value="OTHER">Other — أخرى</option>
+      </select>
+      <label for="coCity" data-i18n="coCity">المدينة</label>
+      <input id="coCity" type="text" autocomplete="address-level2" maxlength="60">
+      <label for="coAddress" data-i18n="coAddress">العنوان</label>
+      <input id="coAddress" type="text" autocomplete="street-address" maxlength="140">
+      <label for="coNotes" data-i18n="coNotes">ملاحظات (اختياري)</label>
+      <textarea id="coNotes" rows="2" maxlength="300"></textarea>
+      <p class="form-msg" id="coMsg" role="status" aria-live="polite"></p>
+      <h2 style="margin:10px 0 12px" data-i18n="coReviewTitle">مراجعة الطلب</h2>
+      <div id="coReview"></div>
+      <div class="cart-total"><span data-i18n="total">المجموع</span><span id="coTotal">0</span></div>
+      <button class="btn btn-solid" type="submit" style="width:100%" data-i18n="coPlace">تأكيد الطلب والانتقال للدفع</button>
+    </form>
+  </div>
+</main>
+<footer id="siteFooter"></footer>
+<script src="data.js"></script>
+<script src="i18n.js"></script>
+<script src="store.js"></script>
+<script src="checkout.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
