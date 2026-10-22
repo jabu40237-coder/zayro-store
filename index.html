@@ -1,437 +1,174 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-lang="ar">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ZAYRO STORE | زايرو ستور — متجر السعودية والخليج</title>
-<meta name="description" content="ZAYRO STORE — متجر عربي للسعودية والخليج: منتجات أصلية مختارة بعناية بأسعار أقل بـ 3$ من أي موقع، ومنتجات رقمية حصرية.">
-<style>
-  :root{
-    --ink:#0a0a0c;
-    --ink-2:#101014;
-    --ink-3:#16161c;
-    --gold:#c9a24b;
-    --gold-light:#e8c97a;
-    --gold-deep:#8a6d2f;
-    --cream:#f3ead2;
-    --muted:#a89f8d;
-    --line:rgba(201,162,75,.28);
-    --card:#121218;
-    --radius:18px;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    background:var(--ink);
-    color:var(--cream);
-    font-family:"Segoe UI", Tahoma, "Noto Kufi Arabic", Arial, sans-serif;
-    line-height:1.8;
-    overflow-x:hidden;
-  }
-  ::selection{background:var(--gold);color:#111}
-  a{color:inherit;text-decoration:none}
-  .wrap{max-width:1180px;margin:0 auto;padding:0 22px}
-
-  /* ---------- شريط علوي ---------- */
-  header{
-    position:sticky;top:0;z-index:50;
-    background:rgba(10,10,12,.86);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line);
-  }
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-  .brand{display:flex;align-items:center;gap:12px}
-  .brand-mark{
-    width:44px;height:44px;flex:0 0 44px;
-    border:1.5px solid var(--gold);border-radius:50%;
-    display:grid;place-items:center;
-    color:var(--gold);font-weight:800;font-size:20px;
-    background:radial-gradient(circle at 35% 30%, #23232c, #0d0d10);
-  }
-  .brand-text{line-height:1.25}
-  .brand-text b{font-size:21px;letter-spacing:.5px}
-  .brand-text span{display:block;font-size:11px;color:var(--gold);letter-spacing:4px;font-weight:700}
-  .nav-links{display:flex;gap:26px;font-size:15px;color:var(--muted)}
-  .nav-links a:hover{color:var(--gold-light)}
-  .nav-cta{
-    border:1px solid var(--gold);color:var(--gold-light);
-    padding:7px 18px;border-radius:999px;font-size:14px;font-weight:700;
-    transition:.25s;
-  }
-  .nav-cta:hover{background:var(--gold);color:#131310}
-  @media(max-width:720px){.nav-links{display:none}}
-
-  /* ---------- البطل ---------- */
-  .hero{
-    position:relative;text-align:center;
-    padding:96px 0 84px;
-    background:
-      radial-gradient(640px 340px at 50% -60px, rgba(201,162,75,.16), transparent 70%),
-      linear-gradient(180deg, var(--ink-2), var(--ink));
-    border-bottom:1px solid var(--line);
-    overflow:hidden;
-  }
-  .hero::before,.hero::after{
-    content:"";position:absolute;top:0;bottom:0;width:1px;
-    background:linear-gradient(180deg, transparent, var(--line), transparent);
-  }
-  .hero::before{right:8%}.hero::after{left:8%}
-  .kicker{
-    display:inline-block;color:var(--gold);letter-spacing:3px;font-size:13px;font-weight:700;
-    border:1px solid var(--line);border-radius:999px;padding:5px 18px;margin-bottom:26px;
-    background:rgba(201,162,75,.06);
-  }
-  .hero h1{font-size:clamp(44px,8vw,84px);line-height:1.15;font-weight:900}
-  .hero h1 .gold{
-    background:linear-gradient(120deg, var(--gold-deep), var(--gold-light) 55%, var(--gold));
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-  }
-  .hero .latin{letter-spacing:14px;color:var(--muted);font-size:clamp(12px,2.4vw,17px);font-weight:700;margin-top:10px}
-  .hero p.lead{max-width:640px;margin:26px auto 0;color:var(--muted);font-size:18px}
-  .hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:36px}
-  .btn{
-    padding:13px 32px;border-radius:999px;font-weight:800;font-size:16px;transition:.25s;
-    border:1px solid var(--gold);
-  }
-  .btn-solid{background:linear-gradient(120deg, var(--gold-deep), var(--gold));color:#141310}
-  .btn-solid:hover{filter:brightness(1.12)}
-  .btn-ghost{color:var(--gold-light);background:transparent}
-  .btn-ghost:hover{background:rgba(201,162,75,.1)}
-  .hero-stats{display:flex;gap:38px;justify-content:center;margin-top:52px;flex-wrap:wrap}
-  .stat b{display:block;font-size:26px;color:var(--gold-light)}
-  .stat span{font-size:13px;color:var(--muted)}
-
-  /* ---------- عناوين الأقسام ---------- */
-  section{padding:84px 0}
-  .sec-head{text-align:center;margin-bottom:48px}
-  .sec-head .tag{color:var(--gold);letter-spacing:3px;font-size:12.5px;font-weight:700}
-  .sec-head h2{font-size:clamp(28px,4.5vw,40px);font-weight:900;margin-top:8px}
-  .sec-head p{color:var(--muted);max-width:560px;margin:10px auto 0}
-  .divider{width:74px;height:2px;margin:18px auto 0;background:linear-gradient(90deg, transparent, var(--gold), transparent)}
-
-  /* ---------- القصة المميزة ---------- */
-  .featured{
-    display:grid;grid-template-columns:1.05fr 1fr;gap:0;
-    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
-  }
-  @media(max-width:860px){.featured{grid-template-columns:1fr}}
-  .poster{
-    min-height:380px;position:relative;
-    background:
-      radial-gradient(420px 300px at 70% 20%, rgba(201,162,75,.22), transparent 65%),
-      linear-gradient(160deg,#1b1b22,#0c0c0f 70%);
-    display:flex;flex-direction:column;justify-content:flex-end;padding:34px;
-  }
-  .poster .frame{
-    position:absolute;inset:16px;border:1px solid var(--line);border-radius:12px;pointer-events:none;
-  }
-  .poster .ep{color:var(--gold);letter-spacing:3px;font-size:12px;font-weight:800}
-  .poster h3{font-size:clamp(30px,4vw,44px);font-weight:900;line-height:1.3;margin-top:6px}
-  .poster .en{letter-spacing:6px;color:var(--muted);font-size:13px;font-weight:700}
-  .poster-body{padding:38px 36px}
-  .poster-body p{color:var(--muted);margin-bottom:16px}
-  .poster-body .hook{color:var(--cream);font-size:18px}
-  .meta-row{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 26px}
-  .chip{border:1px solid var(--line);border-radius:999px;padding:4px 14px;font-size:13px;color:var(--gold-light);background:rgba(201,162,75,.05)}
-  .watch-note{font-size:14px;color:var(--muted)}
-  .watch-note b{color:var(--gold-light)}
-
-  /* ---------- المنتجات ---------- */
-  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
-  @media(max-width:860px){.grid{grid-template-columns:1fr}}
-  .product{
-    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-    padding:32px 30px;position:relative;overflow:hidden;transition:.25s;
-  }
-  .product:hover{transform:translateY(-4px);border-color:var(--gold)}
-  .product .icon{font-size:30px;margin-bottom:14px}
-  .product h3{font-size:22px;font-weight:800;margin-bottom:8px}
-  .product p{color:var(--muted);font-size:15.5px;margin-bottom:18px}
-  .product ul{list-style:none;margin-bottom:22px}
-  .product li{color:var(--muted);font-size:14.5px;padding:4px 0;padding-right:22px;position:relative}
-  .product li::before{content:"◆";position:absolute;right:0;color:var(--gold);font-size:10px;top:9px}
-  .price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:20px}
-  .price{font-size:30px;font-weight:900;color:var(--gold-light)}
-  .price-row span{color:var(--muted);font-size:13.5px}
-  .buy{
-    width:100%;padding:13px;border-radius:12px;border:1px dashed var(--gold-deep);
-    background:rgba(201,162,75,.06);color:var(--gold-light);
-    font-family:inherit;font-size:15.5px;font-weight:800;cursor:not-allowed;
-  }
-  .badge{
-    position:absolute;top:20px;left:20px;font-size:11.5px;font-weight:800;letter-spacing:1px;
-    color:#141310;background:linear-gradient(120deg, var(--gold-deep), var(--gold-light));
-    padding:4px 12px;border-radius:999px;
-  }
-  .badge.soon{background:transparent;border:1px solid var(--line);color:var(--muted)}
-
-  /* ---------- كيف يعمل الشراء ---------- */
-  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-  @media(max-width:860px){.steps{grid-template-columns:1fr}}
-  .step{
-    text-align:center;background:var(--ink-3);border:1px solid var(--line);
-    border-radius:var(--radius);padding:34px 26px;
-  }
-  .step .num{
-    width:54px;height:54px;margin:0 auto 16px;border-radius:50%;
-    border:1.5px solid var(--gold);display:grid;place-items:center;
-    font-size:22px;font-weight:900;color:var(--gold-light);
-  }
-  .step h3{font-size:19px;margin-bottom:8px}
-  .step p{color:var(--muted);font-size:15px}
-
-  /* ---------- النادي الذهبي ---------- */
-  .club{
-    border:1px solid var(--gold);border-radius:24px;text-align:center;
-    padding:64px 30px;position:relative;overflow:hidden;
-    background:
-      radial-gradient(560px 260px at 50% -40px, rgba(201,162,75,.2), transparent 70%),
-      linear-gradient(180deg,#14120a, var(--ink-2));
-  }
-  .club h2{font-size:clamp(28px,4.5vw,42px);font-weight:900}
-  .club p{color:var(--muted);max-width:600px;margin:14px auto 0}
-  .club .perks{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:28px 0 34px}
-
-  /* ---------- آراء/أقوال ---------- */
-  .quote{
-    text-align:center;max-width:720px;margin:0 auto;
-    font-size:clamp(20px,3vw,26px);line-height:2;font-weight:700;
-  }
-  .quote span{color:var(--gold-light)}
-
-  /* ---------- تذييل ---------- */
-  footer{border-top:1px solid var(--line);background:var(--ink-2);padding:54px 0 34px}
-  .foot{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}
-  .foot .col h4{color:var(--gold-light);margin-bottom:12px;font-size:16px}
-  .foot .col a{display:block;color:var(--muted);font-size:14.5px;padding:3px 0}
-  .foot .col a:hover{color:var(--gold-light)}
-  .socials{display:flex;gap:12px;margin-top:6px}
-  .socials a{
-    border:1px solid var(--line);border-radius:999px;padding:7px 18px;font-size:14px;font-weight:700;color:var(--cream);
-  }
-  .socials a:hover{border-color:var(--gold);color:var(--gold-light)}
-  .copy{margin-top:38px;padding-top:20px;border-top:1px solid rgba(201,162,75,.12);text-align:center;color:var(--muted);font-size:13px}
-</style>
+<meta name="description" content="ZAYRO STORE — متجر عربي للسعودية والخليج: منتجات مختارة بعناية ومنتجات رقمية حصرية بتسليم فوري. EVERYTHING YOU WANT. ONE PLACE.">
+<meta name="description" lang="en" content="ZAYRO STORE — a curated Saudi & Gulf store: handpicked products and exclusive digital products with instant delivery. EVERYTHING YOU WANT. ONE PLACE.">
+<meta property="og:title" content="ZAYRO STORE — EVERYTHING YOU WANT. ONE PLACE.">
+<meta property="og:description" content="متجر السعودية والخليج — منتجات مختارة ومنتجات رقمية حصرية · A curated Saudi & Gulf store with exclusive digital products.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://jabu40237-coder.github.io/zayro-store/">
+<meta name="theme-color" content="#0a0a0c">
+<link rel="stylesheet" href="styles.css">
+<script>
+  try { var l = localStorage.getItem("zayro_lang"); if (l === "en") { document.documentElement.lang = "en"; document.documentElement.dir = "ltr"; document.documentElement.setAttribute("data-lang", "en"); } } catch (e) {}
+</script>
 </head>
 <body>
+<header id="siteHeader"></header>
 
-<!-- ===================== الهيدر ===================== -->
-<header>
-  <div class="wrap nav">
-    <a class="brand" href="#top" aria-label="ZAYRO STORE">
-      <span class="brand-mark">Z</span>
-      <span class="brand-text"><b>ZAYRO</b><span>STORE</span></span>
-    </a>
-    <nav class="nav-links">
-      <a href="#products">المنتجات</a>
-      <a href="#products">المنتجات</a>
-      <a href="#how">كيف تشتري؟</a>
-      <a href="#products">المنتجات الرقمية</a>
-    </nav>
-    <a class="nav-cta" href="#products">المتجر</a>
-  </div>
-</header>
-
-<!-- ===================== البطل ===================== -->
 <div class="hero" id="top">
   <div class="wrap">
-    <span class="kicker">متجر الخليج الأول · منتجات أصلية · أسعار أقل بـ 3$ من أي موقع</span>
-    <h1>ZAYRO STORE<br><span class="gold">منتجات مختارة للسعودية والخليج</span></h1>
-    <div class="latin">Z A Y R O &nbsp; S T O R E</div>
-    <p class="lead">مباخر إلكترونية، إكسسوارات فاخرة، هدايا راقية ومنتجات رقمية حصرية — مختارة بعناية لذوق الخليج، بأسعار أقل من السوق، وتوصيل داخل المملكة ودول الخليج.</p>
+    <svg class="hero-logo" viewBox="0 0 120 120" role="img" aria-label="ZAYRO STORE logo">
+      <defs>
+        <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#8a6d2f"/><stop offset=".55" stop-color="#e8c97a"/><stop offset="1" stop-color="#c9a24b"/>
+        </linearGradient>
+      </defs>
+      <circle cx="60" cy="60" r="54" fill="none" stroke="url(#goldGrad)" stroke-width="2.5"/>
+      <circle cx="60" cy="60" r="47" fill="none" stroke="url(#goldGrad)" stroke-width="1" opacity=".5"/>
+      <text x="60" y="76" text-anchor="middle" font-family="Georgia,serif" font-size="52" font-weight="700" fill="url(#goldGrad)">Z</text>
+    </svg>
+    <span class="kicker" data-i18n="kicker">متجر السعودية والخليج · منتجات مختارة بعناية</span>
+    <h1><span data-i18n="heroTitleA">ZAYRO STORE</span><br><span class="gold" data-i18n="heroTitleB">كل ما تريده. في مكان واحد.</span></h1>
+    <div class="slogan" data-i18n="slogan">EVERYTHING YOU WANT. ONE PLACE.</div>
+    <p class="lead" data-i18n="lead">منتجات مختارة للسعودية والخليج ومنتجات رقمية حصرية من إنتاج المتجر — ما هو متاح يُباع الآن، وما لم يكتمل توريده يظهر بصراحة كـ«قريباً».</p>
     <div class="hero-actions">
-      <a class="btn btn-solid" href="#products">تصفّح المنتجات</a>
-      <a class="btn btn-ghost" href="#how">كيف تشتري؟</a>
+      <a class="btn btn-solid" href="#products" data-i18n="browse">تسوّق الآن</a>
+      <a class="btn btn-ghost" href="#how" data-i18n="howBtn">كيف تشتري؟</a>
     </div>
-    <div class="hero-stats">
-      <div class="stat"><b>7</b><span>منتجات عند الإطلاق</span></div>
-      <div class="stat"><b>-3$</b><span>أقل من أي موقع آخر</span></div>
-      <div class="stat"><b>100%</b><span>منتجات أصلية مختارة</span></div>
-    </div>
+    <form class="toolbar" id="heroSearch" style="margin-top:36px;justify-content:center">
+      <div class="search-box">
+        <input type="search" id="heroSearchInput" data-i18n-ph="searchPh" placeholder="ابحث عن منتج…" aria-label="Search products">
+      </div>
+      <button class="btn btn-solid" type="submit" data-i18n="searchBtn">بحث</button>
+    </form>
   </div>
 </div>
 
-<!-- ===================== المنتجات ===================== -->
+<main>
+<section id="cats">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="tag" data-i18n="allTag">الأقسام</div>
+      <h2 data-i18n="catsTitle">تسوّق حسب القسم</h2>
+      <p data-i18n="catsSub">أحد عشر قسماً — الأقسام الفارغة حالياً ستُفتح عند توفر منتجات موثّقة التوريد.</p>
+      <div class="divider"></div>
+    </div>
+    <div class="cat-grid" id="catGrid"></div>
+  </div>
+</section>
+
+<section id="featured" style="background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="tag" data-i18n="featuredTag">متاح الآن</div>
+      <h2 data-i18n="featuredTitle">المنتجات المميزة</h2>
+      <p data-i18n="featuredSub">المنتجات الرقمية الخاصة بالمتجر — متاحة للشراء الفوري الآن.</p>
+      <div class="divider"></div>
+    </div>
+    <div class="grid" id="featuredGrid"></div>
+  </div>
+</section>
+
+<section id="newsec">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="tag" data-i18n="newTag">جديد</div>
+      <h2 data-i18n="newTitle">قريباً في المتجر</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="teaser-card" id="teaserCard"></div>
+  </div>
+</section>
+
 <section id="products" style="background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
   <div class="wrap">
     <div class="sec-head">
-      <div class="tag">المتجر</div>
-      <h2>منتجات مختارة للسعودية والخليج</h2>
-      <p>منتجات أصلية مختارة بعناية لجمهور السعودية والخليج — أسعار بالريال، وتوصيل داخل المملكة ودول الخليج، ومنتجات رقمية تُسلَّم فوراً.</p>
+      <div class="tag" data-i18n="allTag">المتجر</div>
+      <h2 data-i18n="allTitle">كل المنتجات</h2>
+      <p data-i18n="allSub">أسعار بالريال السعودي (والدولار للمرجع فقط). المنتجات الرقمية متاحة الآن؛ المنتجات الفيزيائية تُفتح للطلب عند تفعيل حساب المورّد.</p>
       <div class="divider"></div>
     </div>
-    <div class="grid">
-
-      <div class="product">
-        <span class="badge">الأكثر طلباً</span>
-        <div class="icon">🪔</div>
-        <h3>مبخرة إلكترونية + بخور فاخر</h3>
-        <p>مبخرة إلكترونية قابلة للشحن مع بخور معمول فاخر — فخامة المجالس السعودية برائحة تدوم، وهدية مثالية.</p>
-        <ul>
-          <li>شحن USB وإطفاء تلقائي آمن</li>
-          <li>معها بخور معمول جاهز للاستخدام</li>
-          <li>تصميم يليق بالمجالس والهدايا</li>
-        </ul>
-        <div class="price-row"><span class="price">139 ر.س</span><span>شامل التوصيل داخل المملكة</span></div>
-        <a class="buy" href="https://ig.me/m/aiuhkot" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">أعلمني عند التوفر — الطلب يُفتح قريباً</a>
+    <div class="toolbar">
+      <div class="search-box">
+        <input type="search" id="searchInput" data-i18n-ph="searchPh" placeholder="ابحث عن منتج…" aria-label="Search products">
       </div>
+      <label for="statusFilter" data-i18n="filterStatus">الحالة</label>
+      <select id="statusFilter">
+        <option value="all" data-i18n="stAll">الكل</option>
+        <option value="available" data-i18n="stAvailable">متاح للشراء</option>
+        <option value="notify" data-i18n="stNotify">قريباً — أعلمني</option>
+        <option value="unavailable" data-i18n="stUnavailable">غير متاح حالياً</option>
+      </select>
+      <label for="sortSel" data-i18n="filterSort">الترتيب</label>
+      <select id="sortSel">
+        <option value="default" data-i18n="sortDefault">الافتراضي</option>
+        <option value="asc" data-i18n="sortPriceAsc">السعر: من الأقل</option>
+        <option value="desc" data-i18n="sortPriceDesc">السعر: من الأعلى</option>
+        <option value="name" data-i18n="sortName">الاسم</option>
+      </select>
+    </div>
+    <div class="grid" id="grid"></div>
+    <p class="empty-msg" id="emptyMsg" style="display:none" data-i18n="empty">لا توجد منتجات مطابقة لبحثك.</p>
+  </div>
+</section>
 
-      <div class="product">
-        <span class="badge">الأكثر مبيعاً</span>
-        <div class="icon">📱</div>
-        <h3>غطاء جوال MagSafe الفاخر</h3>
-        <p>غطاء مغناطيسي متوافق مع الشحن اللاسلكي — حماية عسكرية وخامة فاخرة لأجهزة آيفون وسامسونج.</p>
-        <ul>
-          <li>مغناطيس قوي متوافق مع MagSafe</li>
-          <li>حماية من الصدمات والسقوط</li>
-          <li>ألوان هادئة تناسب الذوق الخليجي</li>
-        </ul>
-        <div class="price-row"><span class="price">49 ر.س</span><span>دفعة واحدة</span></div>
-        <a class="buy" href="https://ig.me/m/aiuhkot" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">أعلمني عند التوفر — الطلب يُفتح قريباً</a>
-      </div>
-
-      <div class="product">
-        <span class="badge">هدايا</span>
-        <div class="icon">🕌</div>
-        <h3>سجادة صلاة مبطّنة + مسبحة إلكترونية</h3>
-        <p>طقم روحاني متكامل: سجادة مبطّنة مريحة للركب ومسبحة عدّاد رقمية — رفيقك اليومي وهدية راقية للأهل.</p>
-        <ul>
-          <li>حشوة مريحة وظهر مانع للانزلاق</li>
-          <li>مسبحة رقمية بعدّاد واضح</li>
-          <li>تغليف هدايا أنيق متوفر</li>
-        </ul>
-        <div class="price-row"><span class="price">79 ر.س</span><span>للطقم الكامل</span></div>
-        <a class="buy" href="https://ig.me/m/aiuhkot" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">أعلمني عند التوفر — الطلب يُفتح قريباً</a>
-      </div>
-
-      <div class="product">
-        <span class="badge">صنع عند الطلب</span>
-        <div class="icon">🖼️</div>
-        <h3>لوحة خط عربي — كانفس فاخر</h3>
-        <p>لوحات خط عربي أصيل تُطبع عند الطلب على كانفس مشدود بإطار خشبي — قطعة فن تليق بديوانيتك ومكتبك.</p>
-        <ul>
-          <li>تصاميم خط عربي حصرية</li>
-          <li>مقاسات متعددة حتى 90×60 سم</li>
-          <li>تُصنع خصيصاً لك بعد الطلب</li>
-        </ul>
-        <div class="price-row"><span class="price">139 ر.س</span><span>تبدأ من</span></div>
-        <a class="buy" href="https://ig.me/m/aiuhkot" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">أعلمني عند التوفر — الطلب يُفتح قريباً</a>
-      </div>
-
-      <div class="product">
-        <span class="badge">للسيارة</span>
-        <div class="icon">🚗</div>
-        <h3>منظّم إكسسوارات السيارة الداخلي</h3>
-        <p>منظّم عملي لمقصورة السيارة وحامل جوال ثابت — ترتيب وأناقة لمشاويرك اليومية الطويلة.</p>
-        <ul>
-          <li>خامات متينة تتحمل حرارة الخليج</li>
-          <li>تركيب بدقيقة واحدة بدون أدوات</li>
-          <li>يناسب أغلب السيارات</li>
-        </ul>
-        <div class="price-row"><span class="price">89 ر.س</span><span>دفعة واحدة</span></div>
-        <a class="buy" href="https://ig.me/m/aiuhkot" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">أعلمني عند التوفر — الطلب يُفتح قريباً</a>
-      </div>
-
-      <div class="product">
-        <span class="badge">رقمي — فوري</span>
-        <div class="icon">🎧</div>
-        <h3>المكتبة الصوتية الحصرية</h3>
-        <p>مكتبة صوتية حصرية تروي أعظم قصص الهروب والسرقة والغموض بصيغ ممتدة معمّقة — تفاصيل لا تتسع لها الريلز.</p>
-        <ul>
-          <li>10 قصص كاملة عند الإطلاق، وقصة جديدة كل أسبوع</li>
-          <li>استماع بلا إنترنت من أي جهاز</li>
-          <li>ملف حقائق موثّقة مع كل قصة</li>
-        </ul>
-        <div class="price-row"><span class="price">45 ر.س</span><span>/ شهرياً — اشتراك</span></div>
-        <a class="buy" href="https://nowpayments.io/payment/?iid=4839326645" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">اشترِ الآن — دفع آمن</a>
-      </div>
-
-      <div class="product">
-        <span class="badge">VIP</span>
-        <div class="icon">👑</div>
-        <h3>العضوية الذهبية</h3>
-        <p>عضوية القناة الخاصة: قصص حصرية لا تُنشر للعامة، وتصويت على قصة الأسبوع، وجلسات نقاش مباشرة.</p>
-        <ul>
-          <li>قصة حصرية كل أسبوع للأعضاء فقط</li>
-          <li>أنت تختار قصص الشهر بالتصويت</li>
-          <li>شارة العضو الذهبي في المجتمع</li>
-        </ul>
-        <div class="price-row"><span class="price">55 ر.س</span><span>/ شهرياً — اشتراك</span></div>
-        <a class="buy" href="https://nowpayments.io/payment/?iid=4679495844" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none">اشترِ الآن — دفع آمن</a>
-      </div>
-
+<section id="info">
+  <div class="wrap">
+    <div class="info-strip">
+      <div class="step"><h3 data-i18n="infoShipT">الشحن والتوصيل</h3><p data-i18n="infoShipP">المنتجات الرقمية تُسلَّم فوراً. الشحن الفيزيائي يبدأ عند تفعيل حساب المورّد — التفاصيل في صفحة الشحن.</p></div>
+      <div class="step"><h3 data-i18n="infoRetT">الإرجاع والاستبدال</h3><p data-i18n="infoRetP">سياسة إرجاع واضحة لكل منتج — التفاصيل في صفحة الإرجاع والاستبدال.</p></div>
+      <div class="step"><h3 data-i18n="infoSupT">خدمة العملاء</h3><p data-i18n="infoSupP">راسلنا عبر إنستغرام @aiuhkot — نرد من المعلومات المؤكدة فقط.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ===================== كيف يعمل الشراء ===================== -->
-<section id="how">
+<section id="how" style="background:var(--ink-2);border-top:1px solid var(--line)">
   <div class="wrap">
     <div class="sec-head">
-      <div class="tag">ببساطة</div>
-      <h2>كيف يعمل الشراء؟</h2>
+      <div class="tag" data-i18n="howTag">ببساطة</div>
+      <h2 data-i18n="howTitle">كيف يعمل الشراء؟</h2>
       <div class="divider"></div>
     </div>
     <div class="steps">
-      <div class="step">
-        <div class="num">1</div>
-        <h3>اختر منتجك</h3>
-        <p>تصفّح المنتجات أعلاه واختر ما يناسبك — اشتراك شهري أو دفعة واحدة.</p>
-      </div>
-      <div class="step">
-        <div class="num">2</div>
-        <h3>ادفع بأمان</h3>
-        <p>كل مبيعات المتجر تُجمَع في محفظة واحدة موحّدة خاصة بالمتجر — أزرار الدفع تُفعَّل عند اكتمال ربط المحفظة، وهو ما يجري العمل عليه الآن.</p>
-      </div>
-      <div class="step">
-        <div class="num">3</div>
-        <h3>استلم فوراً</h3>
-        <p>منتجات رقمية: يصلك رابط الوصول إلى بريدك مباشرة بعد الدفع، بلا شحن ولا انتظار.</p>
-      </div>
+      <div class="step"><div class="num">1</div><h3 data-i18n="step1t">اختر منتجك</h3><p data-i18n="step1p">تصفّح الأقسام والمنتجات واختر ما يناسبك — اشتراك شهري أو دفعة واحدة.</p></div>
+      <div class="step"><div class="num">2</div><h3 data-i18n="step2t">ادفع بأمان</h3><p data-i18n="step2p">الدفع للمنتجات الرقمية عبر روابط NOWPayments الآمنة. المنتجات الفيزيائية لا تُباع قبل تفعيل التوريد.</p></div>
+      <div class="step"><div class="num">3</div><h3 data-i18n="step3t">استلم فوراً</h3><p data-i18n="step3p">المنتجات الرقمية: يصلك الوصول بعد إتمام الدفع عند بوابة الدفع وتأكيده — بلا شحن ولا انتظار.</p></div>
     </div>
   </div>
 </section>
 
-<!-- ===================== التذييل ===================== -->
-<footer>
+<section id="notify">
   <div class="wrap">
-    <div class="foot">
-      <div class="col" style="max-width:320px">
-        <a class="brand" href="#top" style="margin-bottom:14px">
-          <span class="brand-mark">Z</span>
-          <span class="brand-text"><b>ZAYRO</b><span>STORE</span></span>
-        </a>
-        <p style="color:var(--muted);font-size:14.5px;margin-top:12px">متجر عربي للسعودية والخليج — منتجات أصلية مختارة بعناية، وأسعار أقل بـ 3$ من أي موقع آخر.</p>
-      </div>
-      <div class="col">
-        <h4>المتجر</h4>
-        <a href="#products">المبخرة الإلكترونية</a>
-        <a href="#products">غطاء MagSafe الفاخر</a>
-        <a href="#products">طقم سجادة الصلاة</a>
-        <a href="#products">لوحات الخط العربي</a>
-      </div>
-      <div class="col">
-        <h4>تابعنا</h4>
-        <div class="socials">
-          <a href="https://www.tiktok.com/@aiuhkot" target="_blank" rel="noopener">TikTok · @aiuhkot</a>
-          <a href="https://www.instagram.com/aiuhkot" target="_blank" rel="noopener">Instagram · @aiuhkot</a>
-        </div>
-        <a href="#products" style="margin-top:12px">كل المنتجات</a>
-        <a href="#how">كيف يعمل الشراء؟</a>
-      </div>
+    <div class="sec-head">
+      <div class="tag" data-i18n="featuredTag">كن أول من يعرف</div>
+      <h2 data-i18n="notifyFormT">سجّل إشعار التوفر</h2>
+      <div class="divider"></div>
     </div>
-    <div class="copy">© 2026 ZAYRO STORE — جميع الحقوق محفوظة</div>
+    <form class="notify-form" id="notifyForm" novalidate>
+      <label for="nfName" data-i18n="coName">الاسم الكامل</label>
+      <input id="nfName" name="name" type="text" autocomplete="name" maxlength="60">
+      <label for="nfContact" data-i18n="fContact">رقم الجوال أو البريد الإلكتروني</label>
+      <input id="nfContact" name="contact" type="text" autocomplete="email" maxlength="80">
+      <label for="nfProduct" data-i18n="fProduct">المنتج المهتم به</label>
+      <select id="nfProduct" name="product"></select>
+      <button class="btn btn-solid" type="submit" style="width:100%" data-i18n="fSubmit">سجّل إشعاري</button>
+      <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+      <p style="color:var(--muted);font-size:13px" data-i18n="fNote">يُحفظ طلبك في متصفحك فقط حالياً — سيُربط بنظام إشعارات عند إطلاق البيع الفعلي.</p>
+    </form>
   </div>
-</footer>
+</section>
+</main>
 
-<script>
-  // تنعيم التمرير للروابط الداخلية + إبراز زر المتجر عند الوصول لقسم المنتجات
-  document.querySelectorAll('a[href^="#"]').forEach(function(a){
-    a.addEventListener('click', function(e){
-      var target = document.querySelector(a.getAttribute('href'));
-      if(target){ e.preventDefault(); target.scrollIntoView({behavior:'smooth'}); }
-    });
-  });
-</script>
+<footer id="siteFooter"></footer>
+
+<script src="data.js"></script>
+<script src="i18n.js"></script>
+<script src="store.js"></script>
+<script src="home.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

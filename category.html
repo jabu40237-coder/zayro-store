@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZAYRO STORE — Category</title>
+<meta name="description" content="ZAYRO STORE — تصفّح حسب القسم · Browse by category.">
+<meta property="og:title" content="ZAYRO STORE — Categories">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0a0a0c">
+<link rel="stylesheet" href="styles.css">
+<script>
+  try { var l = localStorage.getItem("zayro_lang"); if (l === "en") { document.documentElement.lang = "en"; document.documentElement.dir = "ltr"; document.documentElement.setAttribute("data-lang", "en"); } } catch (e) {}
+</script>
+</head>
+<body>
+<header id="siteHeader"></header>
+<main>
+  <div class="page-wrap">
+    <h1 id="catTitle">…</h1>
+    <p class="sub" data-i18n="catProducts">منتجات القسم</p>
+    <div class="toolbar">
+      <div class="search-box">
+        <input type="search" id="searchInput" data-i18n-ph="searchPh" placeholder="ابحث عن منتج…" aria-label="Search products">
+      </div>
+      <label for="statusFilter" data-i18n="filterStatus">الحالة</label>
+      <select id="statusFilter">
+        <option value="all" data-i18n="stAll">الكل</option>
+        <option value="available" data-i18n="stAvailable">متاح للشراء</option>
+        <option value="notify" data-i18n="stNotify">قريباً — أعلمني</option>
+        <option value="unavailable" data-i18n="stUnavailable">غير متاح حالياً</option>
+      </select>
+      <label for="sortSel" data-i18n="filterSort">الترتيب</label>
+      <select id="sortSel">
+        <option value="default" data-i18n="sortDefault">الافتراضي</option>
+        <option value="asc" data-i18n="sortPriceAsc">السعر: من الأقل</option>
+        <option value="desc" data-i18n="sortPriceDesc">السعر: من الأعلى</option>
+        <option value="name" data-i18n="sortName">الاسم</option>
+      </select>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div id="catEmpty" style="display:none;text-align:center;padding:40px 0">
+      <h2 data-i18n="catEmptyTitle">لا توجد منتجات موثّقة في هذا القسم بعد</h2>
+      <p style="color:var(--muted);max-width:560px;margin:12px auto" data-i18n="catEmptyText">لن نعرض منتجات وهمية. عند التحقق من توريد منتجات هذا القسم ستظهر هنا — ويمكنك طلب إشعار عبر رسائل إنستغرام.</p>
+      <a class="btn btn-ghost" href="https://ig.me/m/aiuhkot" target="_blank" rel="noopener" data-i18n="notify">أعلمني عند التوفر</a>
+    </div>
+    <p class="empty-msg" id="emptyMsg" style="display:none" data-i18n="empty">لا توجد منتجات مطابقة لبحثك.</p>
+    <p style="margin-top:30px"><a href="index.html#cats">← <span data-i18n="navCats">الأقسام</span></a></p>
+  </div>
+</main>
+<footer id="siteFooter"></footer>
+<script src="data.js"></script>
+<script src="i18n.js"></script>
+<script src="store.js"></script>
+<script src="category.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
