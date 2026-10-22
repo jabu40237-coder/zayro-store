@@ -1,103 +1,118 @@
-/* ZAYRO STORE v3 — homepage logic: category grid, featured, teaser, all-products
-   with search / status filter / sorting, notify form. Honors the admin
-   prototype's homepage toggles (ZayroStore.homeFlags). */
+/* ZAYRO STORE v5 — homepage. Every section renders from data.js.
+   Section sources (all data-driven, no invented claims):
+   - Trending picks: the catalog in registry order ("store picks" — never
+     labelled as sales/best-sellers; there is no sales data).
+   - Offers: the products that are actually purchasable now (status
+     "available") at their true registry prices — no discounts invented.
+   - New in: teaser (candidate, no price) + newest-listed products.
+   - Picked for you: the full catalog, default sort (newest first).
+   - Experience: the interactive angle viewer for the first product that
+     has real angles360 frames; the section hides itself if none exist.
+   - Reviews: rendered ONLY when ZAYRO_REVIEWS has real entries. */
 window.ZayroPage = {
   init: function (UI) {
     var d = UI.t(), S = window.ZayroStore;
+    var all = UI.products();
     var flags = S.homeFlags();
-    if (!flags.featured) { var fs = document.getElementById("featured"); if (fs) fs.style.display = "none"; }
-    if (!flags.newsec) { var ns = document.getElementById("newsec"); if (ns) ns.style.display = "none"; }
-    if (!flags.how) { var hs = document.getElementById("how"); if (hs) hs.style.display = "none"; }
 
-    /* Category grid */
-    var cg = document.getElementById("catGrid");
-    if (cg) {
-      window.ZAYRO_CATEGORIES.forEach(function (c) {
-        var n = UI.products().filter(function (p) { return p.cats.indexOf(c.key) >= 0; }).length;
-        var a = document.createElement("a");
-        a.className = "cat-card";
-        a.href = "category.html?cat=" + encodeURIComponent(c.key);
-        a.innerHTML = '<div class="ci" aria-hidden="true">' + UI.esc(c.icon) + "</div><h3>" + UI.esc(UI.cname(c)) + "</h3><p>" +
-          (n > 0 ? n + " " + (UI.lang() === "ar" ? "منتج" : "product(s)") : UI.esc(d.badgeSoon)) + "</p>";
-        cg.appendChild(a);
-      });
+    /* Hero imagery: the store's flagship digital product image. */
+    var heroP = UI.byId("ZY-MEMBER") || all[0];
+    if (heroP && heroP.image) document.getElementById("heroImg").src = heroP.image;
+
+    /* Category circular strip */
+    var strip = document.getElementById("catStrip");
+    strip.innerHTML = window.ZAYRO_CATEGORIES.map(function (c) {
+      return '<a class="cat-circle" href="category.html?cat=' + encodeURIComponent(c.key) + '">' +
+        '<span class="ring" aria-hidden="true">' + UI.esc(c.icon) + "</span><span>" + UI.esc(UI.cname(c)) + "</span></a>";
+    }).join("");
+
+    function fill(id, list) {
+      var g = document.getElementById(id); if (!g) return;
+      g.innerHTML = "";
+      list.forEach(function (p) { g.appendChild(UI.productCard(p)); });
+      UI.bindCardButtons(g);
     }
 
-    /* Featured: the available (digital, own) products */
-    var fg = document.getElementById("featuredGrid");
-    if (fg) {
-      UI.products().filter(function (p) { return p.status === "available"; })
-        .forEach(function (p) { fg.appendChild(UI.productCard(p)); });
-      UI.bindCardButtons(fg); UI.bindTilt(fg);
-    }
+    /* Trending picks — registry order (data array order), labelled as picks. */
+    fill("trendingGrid", all);
 
-    /* New: washer teaser (candidate, not for sale, no price) */
-    var tc = document.getElementById("teaserCard");
-    if (tc) {
+    /* Offers — only actually purchasable products, real prices. */
+    var offersSec = document.getElementById("offers");
+    if (!flags.featured) { offersSec.style.display = "none"; }
+    else fill("offersGrid", all.filter(function (p) { return p.status === "available"; }));
+
+    /* New in — teaser card + newest-listed products. */
+    var newSec = document.getElementById("newsec");
+    if (!flags.newsec) { newSec.style.display = "none"; }
+    else {
       var tz = window.ZAYRO_TEASER;
-      tc.innerHTML = '<span class="badge soon" style="position:static">' + UI.esc(d.teaserBadge) + "</span>" +
-        "<h3 style='font-size:24px;margin-top:12px'>" + UI.esc(UI.lang() === "ar" ? tz.name_ar : tz.name_en) + "</h3>" +
-        "<p style='color:var(--muted)'>" + UI.esc(UI.lang() === "ar" ? tz.desc_ar : tz.desc_en) + "</p>" +
-        '<video controls preload="metadata" src="' + UI.esc(tz.video) + '"></video>' +
-        '<div class="card-actions" style="justify-content:center">' +
-        '<a class="notify" href="' + UI.esc(tz.reel_url) + '" target="_blank" rel="noopener">' + UI.esc(d.teaserWatch) + "</a>" +
-        '<a class="notify" href="' + UI.esc(tz.notify_link) + '" target="_blank" rel="noopener">' + UI.esc(d.notify) + "</a></div>";
+      document.getElementById("teaserCard").innerHTML =
+        '<video controls preload="metadata" src="' + UI.esc(tz.video) + '" poster="' + UI.esc(tz.image) + '"></video>' +
+        '<div class="teaser-body"><span class="teaser-badge">' + UI.esc(d.teaserBadge) + "</span>" +
+        "<h3>" + UI.esc(UI.lang() === "ar" ? tz.name_ar : tz.name_en) + "</h3>" +
+        "<p>" + UI.esc(UI.lang() === "ar" ? tz.desc_ar : tz.desc_en) + "</p>" +
+        '<div class="hero-actions"><a class="btn btn-navy" href="' + UI.esc(tz.reel_url) + '" target="_blank" rel="noopener">' + UI.esc(d.teaserWatch) + "</a>" +
+        '<a class="btn btn-ghost" href="' + UI.esc(tz.notify_link) + '" target="_blank" rel="noopener">' + UI.esc(d.notify) + "</a></div></div>";
+      fill("newGrid", S.pure.sortProducts(all, "newest", UI.lang()).slice(0, 4));
     }
 
-    /* All products: search + status filter + sort */
-    var grid = document.getElementById("grid"), empty = document.getElementById("emptyMsg");
-    var si = document.getElementById("searchInput"), sf = document.getElementById("statusFilter"), so = document.getElementById("sortSel");
-    function render() {
-      var q = (si.value || "").trim().toLowerCase();
-      var st = sf.value, sort = so.value;
-      var list = UI.products().filter(function (p) {
-        var stOk = st === "all" || p.status === st;
-        var qOk = !q || (p.name_ar + " " + p.name_en + " " + p.desc_ar + " " + p.desc_en).toLowerCase().indexOf(q) !== -1;
-        return stOk && qOk;
+    /* Interactive experience — first product with real angle frames. */
+    var expSec = document.getElementById("experience");
+    var expP = null;
+    for (var i = 0; i < all.length; i++) if (all[i].angles360 && all[i].angles360.length > 1) { expP = all[i]; break; }
+    if (!expP && window.ZAYRO_TEASER.angles360 && window.ZAYRO_TEASER.angles360.length > 1) {
+      expP = { id: null, name_ar: window.ZAYRO_TEASER.name_ar, name_en: window.ZAYRO_TEASER.name_en, angles360: window.ZAYRO_TEASER.angles360 };
+    }
+    if (expP && window.ZayroViewer) {
+      window.ZayroViewer.Viewer360(document.getElementById("view3dMount"), expP.angles360, {
+        alt: UI.pname(expP), hint: d.dragHint + " · " + d.view360
       });
-      if (sort === "asc") list.sort(function (a, b) { return a.price_sar - b.price_sar; });
-      if (sort === "desc") list.sort(function (a, b) { return b.price_sar - a.price_sar; });
-      if (sort === "name") list.sort(function (a, b) { return UI.pname(a).localeCompare(UI.pname(b)); });
-      grid.innerHTML = "";
-      list.forEach(function (p) { grid.appendChild(UI.productCard(p)); });
-      empty.style.display = list.length ? "none" : "block";
-      UI.bindCardButtons(grid); UI.bindTilt(grid);
-    }
-    if (grid) {
-      si.addEventListener("input", render);
-      sf.addEventListener("change", render);
-      so.addEventListener("change", render);
-      render();
-    }
-    var hsf = document.getElementById("heroSearch");
-    if (hsf) hsf.addEventListener("submit", function (e) {
-      e.preventDefault();
-      si.value = document.getElementById("heroSearchInput").value;
-      render();
-      document.getElementById("products").scrollIntoView({ behavior: "smooth" });
-    });
+      var link = document.getElementById("view3dLink");
+      link.textContent = UI.pname(expP) + " — " + d.details;
+      link.href = expP.id ? "product.html?id=" + encodeURIComponent(expP.id) : window.ZAYRO_TEASER.reel_url;
+    } else if (expSec) { expSec.style.display = "none"; }
 
-    /* Notify form (same validated behaviour as v2, stored locally only) */
+    /* Picked for you — full catalog, default (newest) sort. */
+    fill("forYouGrid", S.pure.sortProducts(all, "newest", UI.lang()));
+
+    /* Reviews — only when real review data exists. */
+    var reviews = window.ZAYRO_REVIEWS || [];
+    if (reviews.length) {
+      var sec = document.getElementById("reviewsSec");
+      sec.hidden = false;
+      document.getElementById("reviewsGrid").innerHTML = reviews.map(function (r) {
+        var p = UI.byId(r.product);
+        return '<div class="review-card"><p class="who">' + UI.esc(r.name) + "</p>" +
+          (p ? '<p class="muted">' + UI.esc(UI.pname(p)) + "</p>" : "") +
+          "<p>" + UI.esc(UI.lang() === "ar" ? r.text_ar : r.text_en) + "</p></div>";
+      }).join("");
+    }
+
+    /* FAQ — first four questions as an accordion. */
+    document.getElementById("faqList").innerHTML = [1, 2, 3, 4].map(function (n) {
+      return '<details class="faq-item"><summary>' + UI.esc(d["faqQ" + n]) + "</summary><p>" + UI.esc(d["faqA" + n]) + "</p></details>";
+    }).join("");
+
+    /* How-to section toggle (admin prototype flag). */
+    if (!flags.how) document.getElementById("how").style.display = "none";
+
+    /* Notify form — local record only (labelled as such in the UI). */
     var sel = document.getElementById("nfProduct");
-    if (sel) {
-      UI.products().filter(function (p) { return p.status !== "available"; }).forEach(function (p) {
-        var o = document.createElement("option"); o.value = p.id; o.textContent = UI.pname(p); sel.appendChild(o);
-      });
-    }
-    var form = document.getElementById("notifyForm");
-    if (form) form.addEventListener("submit", function (e) {
+    all.filter(function (p) { return p.status !== "available"; }).forEach(function (p) {
+      var o = document.createElement("option");
+      o.value = p.id; o.textContent = UI.pname(p); sel.appendChild(o);
+    });
+    document.getElementById("notifyForm").addEventListener("submit", function (e) {
       e.preventDefault();
       var msg = document.getElementById("formMsg");
-      var name = document.getElementById("nfName").value.trim(), contact = document.getElementById("nfContact").value;
       msg.className = "form-msg";
-      if (name.length < 2) { msg.textContent = d.errName; msg.classList.add("err"); return; }
+      var contact = document.getElementById("nfContact").value;
       if (!S.pure.validateContact(contact)) { msg.textContent = d.errContact; msg.classList.add("err"); return; }
-      var leads = [];
-      try { leads = JSON.parse(localStorage.getItem("zayro_notify") || "[]"); } catch (err) { leads = []; }
-      leads.push({ name: name, contact: contact.trim(), product: sel ? sel.value : "", at: new Date().toISOString() });
-      localStorage.setItem("zayro_notify", JSON.stringify(leads));
+      var recs = [];
+      try { recs = JSON.parse(localStorage.getItem("zayro_notify") || "[]"); } catch (e2) {}
+      recs.push({ name: document.getElementById("nfName").value, contact: contact, product: sel.value, at: new Date().toISOString() });
+      try { localStorage.setItem("zayro_notify", JSON.stringify(recs)); } catch (e3) {}
       msg.textContent = d.okForm; msg.classList.add("ok");
-      form.reset();
     });
   }
 };

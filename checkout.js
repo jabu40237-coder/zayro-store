@@ -1,16 +1,15 @@
-/* ZAYRO STORE v3 — checkout: validated shipping/contact form -> order review ->
-   place order. Placing an order:
-     1. builds the item list from the cart (digital/available items only —
-        physical notify-only items BLOCK checkout with a clear message),
-     2. creates a LOCAL order record with status "pending" (payment NOT verified),
-     3. opens each item's own NOWPayments payment link in a new tab,
-     4. clears the cart and goes to order-success.html with id+token.
-   The order becomes "paid" ONLY through the backend IPN verification flow —
-   never from this page. */
+/* ZAYRO STORE v5 — checkout as THREE NUMBERED STEPS (owner's choice):
+     1) contact/shipping details — validated with the SAME pure validator
+        as before; invalid input never advances the wizard.
+     2) review & payment — order summary; placing the order here creates a
+        LOCAL order with status "pending" (payment NOT verified), opens each
+        item's own NOWPayments link, clears the cart.
+     3) confirmation — order-success.html shows the order id + access token.
+   Physical (notify-only) items BLOCK checkout with a clear message, as
+   before. An order becomes "paid" ONLY via the backend IPN flow. */
 window.ZayroPage = {
   init: function (UI) {
     var d = UI.t(), S = window.ZayroStore;
-    var cur = UI.lang() === "ar" ? "ر.س" : "SAR";
     var cart = S.getCart();
     var entries = Object.keys(cart).map(function (id) { var p = UI.byId(id); return p ? { p: p, qty: cart[id] } : null; }).filter(Boolean);
     var blocked = entries.filter(function (e) { return e.p.status !== "available"; });
@@ -28,18 +27,17 @@ window.ZayroPage = {
       form.style.display = "none"; return;
     }
 
-    var review = document.getElementById("coReview");
-    review.innerHTML = ok.map(function (e) {
-      return '<div class="cart-item"><div><div class="nm">' + UI.esc(UI.pname(e.p)) + "</div>" +
-        '<div class="pr">' + UI.esc(d.qty) + ": " + e.qty + "</div></div>" +
-        "<div class='pr'>" + (e.p.price_sar * e.qty) + " " + cur + "</div></div>";
-    }).join("");
-    var totals = S.pure.computeCartTotals(cart, UI.products());
-    document.getElementById("coTotal").textContent = totals.total_sar + " " + cur;
-
-    form.addEventListener("submit", function (ev) {
-      ev.preventDefault();
-      var fields = {
+    function setStep(n) {
+      UI.$all("[data-panel]", form).forEach(function (pn) { pn.hidden = pn.getAttribute("data-panel") !== String(n); });
+      UI.$all("[data-step-ind]").forEach(function (ind) {
+        var k = +ind.getAttribute("data-step-ind");
+        ind.classList.toggle("active", k === n);
+        ind.classList.toggle("done", k < n);
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    function readFields() {
+      return {
         name: document.getElementById("coName").value,
         email: document.getElementById("coEmail").value,
         phone: document.getElementById("coPhone").value,
@@ -48,10 +46,35 @@ window.ZayroPage = {
         address: document.getElementById("coAddress").value,
         notes: document.getElementById("coNotes").value
       };
+    }
+    function renderReview() {
+      document.getElementById("coReview").innerHTML = ok.map(function (e) {
+        return '<div class="cart-item"><div><div class="nm">' + UI.esc(UI.pname(e.p)) + "</div>" +
+          '<div class="pr">' + UI.esc(d.qty) + ": " + e.qty + "</div></div>" +
+          "<div class='pr'>" + UI.esc(UI.fmtPrice(e.p.price_sar * e.qty)) + "</div></div>";
+      }).join("");
+      var totals = S.pure.computeCartTotals(cart, UI.products());
+      document.getElementById("coTotal").textContent = UI.fmtPrice(totals.total_sar);
+    }
+
+    document.getElementById("coNext1").addEventListener("click", function () {
       var msg = document.getElementById("coMsg");
       msg.className = "form-msg";
-      var errs = S.pure.validateCheckout(fields);
+      var errs = S.pure.validateCheckout(readFields());
       if (errs.length) { msg.textContent = d[errs[0]]; msg.classList.add("err"); return; }
+      msg.textContent = "";
+      renderReview();
+      setStep(2);
+    });
+    document.getElementById("coBack2").addEventListener("click", function () { setStep(1); });
+
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var fields = readFields();
+      var msg = document.getElementById("coMsg2");
+      msg.className = "form-msg";
+      var errs = S.pure.validateCheckout(fields);
+      if (errs.length) { msg.textContent = d[errs[0]]; msg.classList.add("err"); setStep(1); return; }
       try {
         var items = ok.map(function (e) { return { id: e.p.id, qty: e.qty, price_sar: e.p.price_sar }; });
         var order = S.createOrder(items, fields);

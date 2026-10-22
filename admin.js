@@ -1,20 +1,19 @@
-/* ZAYRO STORE v3 — admin PROTOTYPE logic.
+/* ZAYRO STORE v5 — admin PROTOTYPE logic.
    *** NOT SECURE — NO SERVER AUTHENTICATION. ***
-   Everything here runs in the visitor's browser: product edits live in a
-   localStorage override layer (zayro_admin_override) on top of data.js,
-   orders are the local checkout records, coupons are local experiments.
-   Production admin requires the backend phase with real authentication —
-   see FEATURES.md and the hardcoded banner in admin.html. */
+   Everything runs in the visitor's browser: product/price/stock edits live
+   in a localStorage override layer (zayro_admin_override) merged over
+   data.js by store.js; orders are the local checkout records; coupons are
+   local experiments. Production admin requires the backend phase with
+   real authentication — see the hardcoded banner in admin.html. */
 window.ZayroPage = {
   init: function (UI) {
     var d = UI.t(), S = window.ZayroStore;
-    var cur = UI.lang() === "ar" ? "ر.س" : "SAR";
     function read(key, fb) { try { var v = JSON.parse(localStorage.getItem(key) || "null"); return v == null ? fb : v; } catch (e) { return fb; } }
     function write(key, v) { localStorage.setItem(key, JSON.stringify(v)); }
     function getOverride() { return read("zayro_admin_override", { added: [], edited: {}, removed: [] }); }
     function setOverride(o) { write("zayro_admin_override", o); }
+    var inpStyle = "width:100px;padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink)";
 
-    /* Tabs */
     UI.$all("[data-tab]").forEach(function (b) {
       b.addEventListener("click", function () {
         UI.$all("[data-tab]").forEach(function (x) { x.classList.remove("active"); });
@@ -28,22 +27,24 @@ window.ZayroPage = {
 
     function renderProducts() {
       var box = document.getElementById("adminProductList");
+      var statusOpts = ["available", "notify", "unavailable"];
       var rows = S.getProducts().map(function (p) {
+        var opts = statusOpts.map(function (s) { return "<option value='" + s + "'" + (p.status === s ? " selected" : "") + ">" + s + "</option>"; }).join("");
         return "<tr><td>" + UI.esc(p.id) + "</td><td>" + UI.esc(UI.pname(p)) + "</td>" +
-          "<td><input type='number' min='0' step='1' value='" + p.price_sar + "' data-price='" + UI.esc(p.id) + "' style='width:90px;padding:6px;border-radius:8px;border:1px solid var(--line);background:var(--ink-3);color:var(--cream)'></td>" +
-          "<td><span class='pill " + (p.status === "available" ? "ok" : "warn") + "'>" + UI.esc(p.status) + "</span></td>" +
-          "<td><button type='button' class='remove-btn' data-save='" + UI.esc(p.id) + "' style='color:var(--gold-light)'>" + UI.esc(d.adminSave) + "</button> · " +
+          "<td><input type='number' min='0' step='1' value='" + (p.price_sar == null ? "" : p.price_sar) + "' data-price='" + UI.esc(p.id) + "' style='" + inpStyle + "'></td>" +
+          "<td><select data-status='" + UI.esc(p.id) + "' style='" + inpStyle + ";width:130px'>" + opts + "</select></td>" +
+          "<td><button type='button' class='remove-btn' data-save='" + UI.esc(p.id) + "' style='color:var(--navy);font-size:14px'>" + UI.esc(d.adminSave) + "</button> · " +
           "<button type='button' class='remove-btn' data-del='" + UI.esc(p.id) + "'>" + UI.esc(d.adminDelete) + "</button></td></tr>";
       }).join("");
-      box.innerHTML = '<table class="data"><tr><th>ID</th><th>' + UI.esc(d.adminColName) + "</th><th>" + UI.esc(d.adminColPrice) +
-        "</th><th>" + UI.esc(d.adminColStatus) + "</th><th>" + UI.esc(d.adminColActions) + "</th></tr>" + rows + "</table>";
+      box.innerHTML = '<div style="overflow-x:auto"><table class="data"><tr><th>ID</th><th>' + UI.esc(d.adminColName) + "</th><th>" + UI.esc(d.adminColPrice) +
+        "</th><th>" + UI.esc(d.adminColStatus) + "</th><th>" + UI.esc(d.adminColActions) + "</th></tr>" + rows + "</table></div>";
       UI.$all("[data-save]", box).forEach(function (b) {
         b.addEventListener("click", function () {
           var id = b.getAttribute("data-save");
-          var inp = box.querySelector("[data-price='" + id + "']");
           var o = getOverride();
           o.edited[id] = o.edited[id] || {};
-          o.edited[id].price_sar = Math.max(0, parseInt(inp.value, 10) || 0);
+          o.edited[id].price_sar = Math.max(0, parseInt(box.querySelector("[data-price='" + id + "']").value, 10) || 0);
+          o.edited[id].status = box.querySelector("[data-status='" + id + "']").value;
           setOverride(o); renderAll();
         });
       });
@@ -64,13 +65,13 @@ window.ZayroPage = {
       var statuses = ["pending", "paid", "supplier_pending", "shipped", "delivered", "failed", "expired", "refunded"];
       var rows = orders.map(function (o, i) {
         var opts = statuses.map(function (s) { return "<option value='" + s + "'" + (o.status === s ? " selected" : "") + ">" + s + "</option>"; }).join("");
-        return "<tr><td>" + UI.esc(o.id) + "</td><td>" + UI.esc(o.customer && o.customer.name || "") + "</td><td>" +
-          o.total_sar + " " + cur + "</td><td>" + UI.esc(o.payment) + "</td><td>" + UI.esc(o.created_at) + "</td>" +
-          "<td><select data-ostatus='" + i + "' style='padding:6px;border-radius:8px;border:1px solid var(--line);background:var(--ink-3);color:var(--cream)'>" + opts + "</select></td></tr>";
+        return "<tr><td>" + UI.esc(o.id) + "</td><td>" + UI.esc((o.customer && o.customer.name) || "") + "</td><td>" +
+          UI.esc(UI.fmtPrice(o.total_sar)) + "</td><td>" + UI.esc(o.payment) + "</td><td>" + UI.esc(o.created_at) + "</td>" +
+          "<td><select data-ostatus='" + i + "' style='" + inpStyle + ";width:150px'>" + opts + "</select></td></tr>";
       }).join("");
-      box.innerHTML = '<table class="data"><tr><th>' + UI.esc(d.adminColOrder) + "</th><th>" + UI.esc(d.adminColCustomer) + "</th><th>" +
+      box.innerHTML = '<div style="overflow-x:auto"><table class="data"><tr><th>' + UI.esc(d.adminColOrder) + "</th><th>" + UI.esc(d.adminColCustomer) + "</th><th>" +
         UI.esc(d.adminColTotal) + "</th><th>" + UI.esc(d.adminColPay) + "</th><th>" + UI.esc(d.adminColDate) + "</th><th>" +
-        UI.esc(d.trStatus) + "</th></tr>" + rows + "</table>";
+        UI.esc(d.trStatus) + "</th></tr>" + rows + "</table></div>";
       UI.$all("[data-ostatus]", box).forEach(function (sel) {
         sel.addEventListener("change", function () {
           var list = S.getOrders();
@@ -118,7 +119,7 @@ window.ZayroPage = {
       var revenue = orders.reduce(function (s, o) { return s + (o.total_sar || 0); }, 0);
       var pending = orders.filter(function (o) { return o.status === "pending"; }).length;
       box.innerHTML = '<table class="data">' +
-        "<tr><td>" + UI.esc(d.adminSumRevenue) + "</td><td>" + revenue + " " + cur + "</td></tr>" +
+        "<tr><td>" + UI.esc(d.adminSumRevenue) + "</td><td>" + UI.esc(UI.fmtPrice(revenue)) + "</td></tr>" +
         "<tr><td>" + UI.esc(d.adminSumOrders) + "</td><td>" + orders.length + "</td></tr>" +
         "<tr><td>" + UI.esc(d.adminSumPending) + "</td><td>" + pending + "</td></tr></table>";
     }
@@ -135,12 +136,13 @@ window.ZayroPage = {
       o.removed = o.removed.filter(function (x) { return x !== id; });
       o.added = o.added.filter(function (p) { return p.id !== id; });
       o.added.push({
-        id: id, cats: ["trending"], icon: "🛍️",
+        id: id, listed: 100, cats: ["trending"], icon: "🛍️",
         name_ar: document.getElementById("npNameAr").value.trim() || id,
         name_en: document.getElementById("npNameEn").value.trim() || id,
         desc_ar: "", desc_en: "", price_sar: price, price_usd: 0, billing: "once",
         status: document.getElementById("npStatus").value,
-        stock_ar: "", stock_en: "", image: null, video: null,
+        stock_ar: "", stock_en: "", image: null, gallery: [], video: null,
+        angles360: [], model_glb: null, model_usdz: null, specs: [],
         payment_link: null, notify_link: "https://ig.me/m/aiuhkot"
       });
       setOverride(o); msg.textContent = "OK"; msg.classList.add("ok"); renderAll();

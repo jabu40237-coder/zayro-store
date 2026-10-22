@@ -1,9 +1,10 @@
-/* ZAYRO STORE v3 — store logic.
-   Pure functions (cart math, validation, admin override merge) are exported for
-   Node tests; browser state (cart / wishlist / orders) lives in localStorage.
-   Orders created here are LOCAL records with status "pending" — a payment is
-   NEVER marked verified by the front-end; only the backend IPN flow can do that
-   (see backend/ and PAYMENTS.md). */
+/* ZAYRO STORE v5 — store logic.
+   Pure functions (cart math, validation, sorting/filtering, currency
+   conversion, admin override merge) are exported for Node tests; browser
+   state (cart / orders) lives in localStorage. NO wishlist — the owner
+   removed it (2026-10-22). Orders created here are LOCAL records with
+   status "pending" — a payment is NEVER marked verified by the front-end;
+   only the backend IPN flow can do that (see backend/). */
 (function () {
   "use strict";
 
@@ -39,6 +40,49 @@
     return errs;
   }
 
+  /* Default sort = newest first (the product's "listed" rank, descending). */
+  function sortProducts(list, mode, lang) {
+    var out = list.slice();
+    /* Price-less candidates (price_sar null) always sort last in price modes. */
+    if (mode === "asc" || mode === "desc") out.sort(function (a, b) {
+      if (a.price_sar == null && b.price_sar == null) return 0;
+      if (a.price_sar == null) return 1;
+      if (b.price_sar == null) return -1;
+      return mode === "asc" ? a.price_sar - b.price_sar : b.price_sar - a.price_sar;
+    });
+    else if (mode === "name") out.sort(function (a, b) {
+      var an = lang === "ar" ? a.name_ar : a.name_en, bn = lang === "ar" ? b.name_ar : b.name_en;
+      return an < bn ? -1 : an > bn ? 1 : 0;
+    });
+    else out.sort(function (a, b) { return (b.listed || 0) - (a.listed || 0); });
+    return out;
+  }
+
+  /* filters: {q, status, cat, price: "any"|"u50"|"50-100"|"o100"} */
+  function filterProducts(list, f, lang) {
+    f = f || {};
+    var q = String(f.q || "").trim().toLowerCase();
+    return list.filter(function (p) {
+      if (f.status && f.status !== "all" && p.status !== f.status) return false;
+      if (f.cat && f.cat !== "all" && p.cats.indexOf(f.cat) < 0) return false;
+      if (f.price && f.price !== "any" && p.price_sar == null) return false; /* no public price -> never in a price band */
+      if (f.price === "u50" && !(p.price_sar < 50)) return false;
+      if (f.price === "50-100" && !(p.price_sar >= 50 && p.price_sar <= 100)) return false;
+      if (f.price === "o100" && !(p.price_sar > 100)) return false;
+      if (q) {
+        var hay = (p.name_ar + " " + p.name_en + " " + p.desc_ar + " " + p.desc_en).toLowerCase();
+        if (hay.indexOf(q) < 0) return false;
+      }
+      return true;
+    });
+  }
+
+  /* DISPLAY-ONLY currency conversion. Checkout never uses this. */
+  function convertPrice(sar, currency, rates) {
+    var rate = (rates && rates[currency]) || 1;
+    return sar * rate;
+  }
+
   /* Admin prototype override layer: {added:[product], edited:{id:patch}, removed:[id]} */
   function mergeProducts(base, override) {
     if (!override) return base.slice();
@@ -58,6 +102,9 @@
     computeCartTotals: computeCartTotals,
     validateContact: validateContact,
     validateCheckout: validateCheckout,
+    sortProducts: sortProducts,
+    filterProducts: filterProducts,
+    convertPrice: convertPrice,
     mergeProducts: mergeProducts
   };
   if (typeof module !== "undefined" && module.exports) { module.exports = PURE; }
@@ -78,12 +125,6 @@
     getCart: function () { return read("zayro_cart", {}); },
     setCart: function (c) { write("zayro_cart", c); },
     addToCart: function (id) { var c = this.getCart(); c[id] = (c[id] || 0) + 1; this.setCart(c); return c; },
-    getWishlist: function () { return read("zayro_wishlist", []); },
-    toggleWish: function (id) {
-      var w = this.getWishlist(), i = w.indexOf(id);
-      if (i >= 0) w.splice(i, 1); else w.push(id);
-      write("zayro_wishlist", w); return w;
-    },
     getOrders: function () { return read("zayro_orders", []); },
     createOrder: function (items, customer) {
       var orders = this.getOrders();
@@ -109,11 +150,19 @@
       }
       return null;
     },
+    /* Email lookup over LOCAL orders only (this browser's records). */
+    findOrdersByEmail: function (email) {
+      var e = String(email || "").trim().toLowerCase();
+      if (!e) return [];
+      return this.getOrders().filter(function (o) {
+        return o.customer && String(o.customer.email || "").trim().toLowerCase() === e;
+      });
+    },
     homeFlags: function () {
       var d = { featured: true, newsec: true, how: true };
       var f = read("zayro_admin_home", null);
       if (f) for (var k in d) if (typeof f[k] === "boolean") d[k] = f[k];
-      return d;
+      return f ? { featured: f.featured, newsec: f.newsec, how: f.how } : d;
     }
   };
   window.ZayroStore = Store;
