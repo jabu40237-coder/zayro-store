@@ -5,31 +5,45 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ZAYRO STORE — Product</title>
 <meta name="description" content="ZAYRO STORE — صفحة منتج · Product page.">
-<meta property="og:title" content="ZAYRO STORE — Product">
-<meta property="og:type" content="website">
-<meta name="theme-color" content="#ffffff">
+<meta property="og:title" content="ZAYRO STORE">
+<meta property="og:description" content="ZAYRO STORE — EVERYTHING YOU WANT. ONE PLACE.">
+<meta property="og:type" content="product">
+<meta id="ogImage" property="og:image" content="">
+<meta name="theme-color" content="#fbfbf9">
 <link rel="stylesheet" href="styles.css">
 <script>
-  try { var l = localStorage.getItem("zayro_lang"); if (l === "en") { document.documentElement.lang = "en"; document.documentElement.dir = "ltr"; document.documentElement.setAttribute("data-lang", "en"); } } catch (e) {}
+try{
+  var l=localStorage.getItem("zayro_lang");
+  if(!l){l=(navigator.language||"ar").toLowerCase().indexOf("ar")===0?"ar":"en";}
+  if(l==="en"){document.documentElement.lang="en";document.documentElement.dir="ltr";document.documentElement.setAttribute("data-lang","en");}
+  if(localStorage.getItem("zayro_theme")==="dark"){document.documentElement.setAttribute("data-theme","dark");}
+}catch(e){}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <header id="siteHeader"></header>
 <main>
-  <div class="pd-wrap">
-    <p><a href="index.html#products">← <span data-i18n="pdBack">عودة إلى المتجر</span></a></p>
-    <div id="pdBody" style="margin-top:22px"></div>
-    <h2 style="margin:44px 0 18px" data-i18n="pdRelated">منتجات ذات صلة</h2>
-    <div class="grid" id="relatedGrid"></div>
+  <div class="page-wrap">
+    <p><a href="shop.html" data-i18n="pdBack">عودة إلى المتجر</a></p>
+    <div id="pdBody" style="margin-top:14px"></div>
+    <section style="padding:56px 0 0">
+      <div class="sec-head">
+        <div class="tag" data-i18n="pdRelated">منتجات مشابهة</div>
+        <h2 data-i18n="pdRelated">منتجات مشابهة</h2>
+      </div>
+      <div class="grid" id="relatedGrid"></div>
+    </section>
   </div>
 </main>
 <footer id="siteFooter"></footer>
+<script src="config.js"></script>
 <script src="data.js"></script>
 <script src="i18n.js"></script>
 <script src="store.js"></script>
+<script src="viewer.js"></script>
 <script src="product.js"></script>
 <script src="app.js"></script>
 </body>

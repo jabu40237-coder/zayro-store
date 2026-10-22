@@ -5,18 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>الخصوصية — ZAYRO STORE | Privacy Policy</title>
 <meta name="description" content="ZAYRO STORE privacy policy — سياسة الخصوصية">
+<meta property="og:title" content="ZAYRO STORE">
+<meta property="og:type" content="website">
 <link rel="stylesheet" href="styles.css">
 <script>
-try{var l=localStorage.getItem("zayro_lang");if(l==="en"){document.documentElement.lang="en";document.documentElement.dir="ltr";document.documentElement.setAttribute("data-lang","en");}}catch(e){}
+try{var l=localStorage.getItem("zayro_lang");if(!l){l=(navigator.language||"ar").toLowerCase().indexOf("ar")===0?"ar":"en";}if(localStorage.getItem("zayro_theme")==="dark"){document.documentElement.setAttribute("data-theme","dark");}if(l==="en"){document.documentElement.lang="en";document.documentElement.dir="ltr";document.documentElement.setAttribute("data-lang","en");}}catch(e){}
 function zayroToggleLang(){var h=document.documentElement;var en=h.getAttribute("data-lang")!=="en";h.setAttribute("data-lang",en?"en":"ar");h.lang=en?"en":"ar";h.dir=en?"ltr":"rtl";try{localStorage.setItem("zayro_lang",en?"en":"ar");}catch(e){}}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <header><div class="wrap nav">
-  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">Z</span><span class="brand-text"><b>ZAYRO</b><span>STORE</span></span></a>
+  <a class="brand" href="index.html">ZAYRO<em>STORE</em></a>
   <div class="nav-actions">
     <a class="lang-btn" href="index.html">← المتجر / Store</a>
     <button class="lang-btn" type="button" onclick="zayroToggleLang()">EN / عربي</button>

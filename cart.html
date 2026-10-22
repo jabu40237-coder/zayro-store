@@ -3,40 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZAYRO STORE — Cart</title>
-<meta name="description" content="ZAYRO STORE — سلة المشتريات · Shopping cart.">
+<title>ZAYRO STORE — سلة المشتريات | Cart</title>
+<meta name="description" content="ZAYRO STORE — سلة المشتريات · Your cart.">
 <meta property="og:title" content="ZAYRO STORE — Cart">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#fbfbf9">
 <link rel="stylesheet" href="styles.css">
 <script>
-  try { var l = localStorage.getItem("zayro_lang"); if (l === "en") { document.documentElement.lang = "en"; document.documentElement.dir = "ltr"; document.documentElement.setAttribute("data-lang", "en"); } } catch (e) {}
+try{
+  var l=localStorage.getItem("zayro_lang");
+  if(!l){l=(navigator.language||"ar").toLowerCase().indexOf("ar")===0?"ar":"en";}
+  if(l==="en"){document.documentElement.lang="en";document.documentElement.dir="ltr";document.documentElement.setAttribute("data-lang","en");}
+  if(localStorage.getItem("zayro_theme")==="dark"){document.documentElement.setAttribute("data-theme","dark");}
+}catch(e){}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <header id="siteHeader"></header>
 <main>
   <div class="page-wrap">
-    <h1 data-i18n="cartTitle">سلة المشتريات</h1>
-    <p class="sub" data-i18n="cartNote">السلة تحفظ في متصفحك. الدفع يتم عند بوابة NOWPayments — لا يُعتبر أي طلب مؤكداً من هذه الصفحة؛ التأكيد يأتي فقط بعد التحقق من الدفع.</p>
-    <div id="cartList"></div>
-    <div class="cart-total" style="max-width:640px"><span data-i18n="total">المجموع</span><span id="pageTotal">0</span></div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;margin:20px 0 50px">
-      <a class="btn btn-solid" href="checkout.html" data-i18n="checkoutBtn">إتمام الطلب</a>
-      <a class="btn btn-ghost" href="index.html#products" data-i18n="continueShopping">متابعة التسوق</a>
+    <div class="sec-head"><h1 data-i18n="cartTitle">سلة المشتريات</h1></div>
+    <div class="form-card" style="max-width:760px">
+      <div id="cartPageItems"></div>
+      <div class="cart-total"><span data-i18n="total">المجموع</span><span id="cartPageTotal">0</span></div>
+      <p class="cart-note" data-i18n="cartNote">السلة تحفظ في متصفحك. الدفع يتم عند بوابة NOWPayments — لا يُعتبر أي طلب مؤكداً من هذه الصفحة؛ التأكيد يأتي فقط بعد التحقق من الدفع.</p>
+      <div class="co-nav">
+        <a class="btn btn-solid" href="checkout.html" data-i18n="checkoutBtn">إتمام الطلب</a>
+        <a class="btn btn-ghost" href="shop.html" data-i18n="continueShopping">متابعة التسوق</a>
+      </div>
     </div>
-    <h2 style="margin-bottom:16px" data-i18n="wishTitle">قائمة المفضلة</h2>
-    <div class="grid" id="wishGrid"></div>
-    <p class="empty-msg" id="wishEmpty" style="display:none" data-i18n="wishEmpty">لا توجد منتجات في المفضلة بعد.</p>
   </div>
 </main>
 <footer id="siteFooter"></footer>
+<script src="config.js"></script>
 <script src="data.js"></script>
 <script src="i18n.js"></script>
 <script src="store.js"></script>
+<script src="viewer.js"></script>
 <script src="cart.js"></script>
 <script src="app.js"></script>
 </body>

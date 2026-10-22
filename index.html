@@ -3,51 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZAYRO STORE | زايرو ستور — متجر السعودية والخليج</title>
-<meta name="description" content="ZAYRO STORE — متجر عربي للسعودية والخليج: منتجات مختارة بعناية ومنتجات رقمية حصرية بتسليم فوري. EVERYTHING YOU WANT. ONE PLACE.">
-<meta name="description" lang="en" content="ZAYRO STORE — a curated Saudi & Gulf store: handpicked products and exclusive digital products with instant delivery. EVERYTHING YOU WANT. ONE PLACE.">
+<title>ZAYRO STORE | زايرو ستور — منتجات رائجة وأسعار منافسة</title>
+<meta name="description" content="ZAYRO STORE — متجر عربي للعالم العربي: منتجات مختارة بعناية ومنتجات رقمية حصرية بتسليم فوري. EVERYTHING YOU WANT. ONE PLACE.">
 <meta property="og:title" content="ZAYRO STORE — EVERYTHING YOU WANT. ONE PLACE.">
-<meta property="og:description" content="متجر السعودية والخليج — منتجات مختارة ومنتجات رقمية حصرية · A curated Saudi & Gulf store with exclusive digital products.">
+<meta property="og:description" content="منتجات رائجة وأسعار منافسة — منتجات مختارة ومنتجات رقمية حصرية بتسليم فوري · Trending products at competitive prices, with exclusive digital products delivered instantly.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://jabu40237-coder.github.io/zayro-store/">
-<meta name="theme-color" content="#ffffff">
+<meta property="og:image" content="https://jabu40237-coder.github.io/zayro-store/assets/member.webp">
+<meta name="theme-color" content="#fbfbf9">
 <link rel="stylesheet" href="styles.css">
 <script>
-  try { var l = localStorage.getItem("zayro_lang"); if (l === "en") { document.documentElement.lang = "en"; document.documentElement.dir = "ltr"; document.documentElement.setAttribute("data-lang", "en"); } } catch (e) {}
+try{
+  var l=localStorage.getItem("zayro_lang");
+  if(!l){l=(navigator.language||"ar").toLowerCase().indexOf("ar")===0?"ar":"en";}
+  if(l==="en"){document.documentElement.lang="en";document.documentElement.dir="ltr";document.documentElement.setAttribute("data-lang","en");}
+  if(localStorage.getItem("zayro_theme")==="dark"){document.documentElement.setAttribute("data-theme","dark");}
+}catch(e){}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"ZAYRO STORE","url":"https://jabu40237-coder.github.io/zayro-store/","potentialAction":{"@type":"SearchAction","target":"https://jabu40237-coder.github.io/zayro-store/shop.html?q={search_term_string}","query-input":"required name=search_term_string"}}
+</script>
 </head>
 <body>
 <header id="siteHeader"></header>
 
 <div class="hero" id="top">
-  <div class="wrap">
-    <svg class="hero-logo" viewBox="0 0 120 120" role="img" aria-label="ZAYRO STORE logo">
-      <defs>
-        <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#081f42"/><stop offset=".55" stop-color="#2e63b8"/><stop offset="1" stop-color="#103a75"/>
-        </linearGradient>
-      </defs>
-      <circle cx="60" cy="60" r="54" fill="none" stroke="url(#goldGrad)" stroke-width="2.5"/>
-      <circle cx="60" cy="60" r="47" fill="none" stroke="url(#goldGrad)" stroke-width="1" opacity=".5"/>
-      <text x="60" y="76" text-anchor="middle" font-family="Georgia,serif" font-size="52" font-weight="700" fill="url(#goldGrad)">Z</text>
-    </svg>
-    <span class="kicker" data-i18n="kicker">متجر السعودية والخليج · منتجات مختارة بعناية</span>
-    <h1><span data-i18n="heroTitleA">ZAYRO STORE</span><br><span class="gold" data-i18n="heroTitleB">كل ما تريده. في مكان واحد.</span></h1>
-    <div class="slogan" data-i18n="slogan">EVERYTHING YOU WANT. ONE PLACE.</div>
-    <p class="lead" data-i18n="lead">منتجات مختارة للسعودية والخليج ومنتجات رقمية حصرية من إنتاج المتجر — ما هو متاح يُباع الآن، وما لم يكتمل توريده يظهر بصراحة كـ«قريباً».</p>
-    <div class="hero-actions">
-      <a class="btn btn-solid" href="#products" data-i18n="browse">تسوّق الآن</a>
-      <a class="btn btn-ghost" href="#how" data-i18n="howBtn">كيف تشتري؟</a>
-    </div>
-    <form class="toolbar" id="heroSearch" style="margin-top:36px;justify-content:center">
-      <div class="search-box">
-        <input type="search" id="heroSearchInput" data-i18n-ph="searchPh" placeholder="ابحث عن منتج…" aria-label="Search products">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="kicker" data-i18n="heroKicker">متجر عربي للعالم العربي · منتجات مختارة بعناية</span>
+      <h1 data-i18n="heroTitle">منتجات رائجة وأسعار منافسة</h1>
+      <div class="slogan" data-i18n="slogan">EVERYTHING YOU WANT. ONE PLACE.</div>
+      <p class="lead" data-i18n="heroLead">منتجات مختارة ومنتجات رقمية حصرية من إنتاج المتجر — ما هو متاح يُباع الآن بتسليم فوري، وما لم يكتمل توريده يظهر بصراحة كـ«قريباً».</p>
+      <div class="hero-actions">
+        <a class="btn btn-solid" href="shop.html" data-i18n="heroCta">تسوّق الآن</a>
+        <a class="btn btn-ghost" href="#experience" data-i18n="heroCta2">جرّب العرض التفاعلي</a>
       </div>
-      <button class="btn btn-solid" type="submit" data-i18n="searchBtn">بحث</button>
-    </form>
+    </div>
+    <div class="hero-media"><img id="heroImg" src="assets/member.webp" alt="ZAYRO STORE" fetchpriority="high"></div>
   </div>
 </div>
 
@@ -55,86 +50,112 @@
 <section id="cats">
   <div class="wrap">
     <div class="sec-head">
-      <div class="tag" data-i18n="allTag">الأقسام</div>
-      <h2 data-i18n="catsTitle">تسوّق حسب القسم</h2>
-      <p data-i18n="catsSub">أحد عشر قسماً — الأقسام الفارغة حالياً ستُفتح عند توفر منتجات موثّقة التوريد.</p>
-      <div class="divider"></div>
+      <div class="tag" data-i18n="secTrendingTag">المجموعات</div>
+      <h2 data-i18n="catsTitle">اكتشف المجموعات</h2>
+      <p data-i18n="catsSub">أحد عشر قسماً — الأقسام الفارغة حالياً تُفتح عند توفر منتجات موثّقة التوريد.</p>
     </div>
-    <div class="cat-grid" id="catGrid"></div>
+    <div class="cat-strip" id="catStrip"></div>
   </div>
 </section>
 
-<section id="featured" style="background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+<section id="trending" class="sec-alt">
   <div class="wrap">
     <div class="sec-head">
-      <div class="tag" data-i18n="featuredTag">متاح الآن</div>
-      <h2 data-i18n="featuredTitle">المنتجات المميزة</h2>
-      <p data-i18n="featuredSub">المنتجات الرقمية الخاصة بالمتجر — متاحة للشراء الفوري الآن.</p>
-      <div class="divider"></div>
+      <div class="tag" data-i18n="secTrendingTag">اختيارات المتجر</div>
+      <h2 data-i18n="secTrendingTitle">مختارات رائجة الآن</h2>
+      <p data-i18n="secTrendingSub">تشكيلة مختارة بعناية من فريق المتجر — تُعرض بأسعارها الحقيقية وحالة توفرها الفعلية.</p>
     </div>
-    <div class="grid" id="featuredGrid"></div>
+    <div class="grid" id="trendingGrid"></div>
   </div>
 </section>
 
-<section id="newsec">
+<section id="offers">
   <div class="wrap">
     <div class="sec-head">
-      <div class="tag" data-i18n="newTag">جديد</div>
-      <h2 data-i18n="newTitle">قريباً في المتجر</h2>
-      <div class="divider"></div>
+      <div class="tag" data-i18n="secOffersTag">عروض مميزة</div>
+      <h2 data-i18n="secOffersTitle">منتجاتنا الرقمية الخاصة</h2>
+      <p data-i18n="secOffersSub">منتجات رقمية من إنتاج المتجر بأسعارها الحقيقية وتسليم فوري — بدون خصومات وهمية.</p>
+    </div>
+    <div class="grid" id="offersGrid"></div>
+  </div>
+</section>
+
+<section id="newsec" class="sec-alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="tag" data-i18n="secNewTag">وصل حديثًا</div>
+      <h2 data-i18n="secNewTitle">أحدث ما وصل المتجر</h2>
+      <p data-i18n="secNewSub">أحدث الإضافات والمنتجات المرشّحة قيد التحقق من التوريد.</p>
     </div>
     <div class="teaser-card" id="teaserCard"></div>
+    <div class="grid" id="newGrid" style="margin-top:26px"></div>
   </div>
 </section>
 
-<section id="products" style="background:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head" style="margin-inline:auto;text-align:center">
+      <div class="tag" data-i18n="sec3dTag">تجربة تفاعلية</div>
+      <h2 data-i18n="sec3dTitle">شاهد المنتج من كل زاوية</h2>
+      <p data-i18n="sec3dSub">اسحب لتدوير العرض ومشاهدة المنتج من زوايا متعددة. النماذج ثلاثية الأبعاد والواقع المعزز تُفعَّل لكل منتج عند توفر ملف نموذجه الحقيقي (GLB/USDZ) — لا نعرض أي زر لميزة غير متاحة فعلياً.</p>
+    </div>
+    <div class="view3d-demo">
+      <div id="view3dMount"></div>
+      <p style="text-align:center;margin-top:14px"><a id="view3dLink" href="product.html?id=ZY-AUDIO"></a></p>
+    </div>
+  </div>
+</section>
+
+<section id="foryou" class="sec-alt">
   <div class="wrap">
     <div class="sec-head">
-      <div class="tag" data-i18n="allTag">المتجر</div>
-      <h2 data-i18n="allTitle">كل المنتجات</h2>
-      <p data-i18n="allSub">أسعار بالريال السعودي (والدولار للمرجع فقط). المنتجات الرقمية متاحة الآن؛ المنتجات الفيزيائية تُفتح للطلب عند تفعيل حساب المورّد.</p>
-      <div class="divider"></div>
+      <div class="tag" data-i18n="secForYouTag">لك</div>
+      <h2 data-i18n="secForYouTitle">منتجات مختارة لك</h2>
+      <p data-i18n="secForYouSub">بقية تشكيلة المتجر الحالية.</p>
     </div>
-    <div class="toolbar">
-      <div class="search-box">
-        <input type="search" id="searchInput" data-i18n-ph="searchPh" placeholder="ابحث عن منتج…" aria-label="Search products">
-      </div>
-      <label for="statusFilter" data-i18n="filterStatus">الحالة</label>
-      <select id="statusFilter">
-        <option value="all" data-i18n="stAll">الكل</option>
-        <option value="available" data-i18n="stAvailable">متاح للشراء</option>
-        <option value="notify" data-i18n="stNotify">قريباً — أعلمني</option>
-        <option value="unavailable" data-i18n="stUnavailable">غير متاح حالياً</option>
-      </select>
-      <label for="sortSel" data-i18n="filterSort">الترتيب</label>
-      <select id="sortSel">
-        <option value="default" data-i18n="sortDefault">الافتراضي</option>
-        <option value="asc" data-i18n="sortPriceAsc">السعر: من الأقل</option>
-        <option value="desc" data-i18n="sortPriceDesc">السعر: من الأعلى</option>
-        <option value="name" data-i18n="sortName">الاسم</option>
-      </select>
-    </div>
-    <div class="grid" id="grid"></div>
-    <p class="empty-msg" id="emptyMsg" style="display:none" data-i18n="empty">لا توجد منتجات مطابقة لبحثك.</p>
+    <div class="grid" id="forYouGrid"></div>
   </div>
 </section>
 
-<section id="info">
+<section id="trust">
   <div class="wrap">
-    <div class="info-strip">
-      <div class="step"><h3 data-i18n="infoShipT">الشحن والتوصيل</h3><p data-i18n="infoShipP">المنتجات الرقمية تُسلَّم فوراً. الشحن الفيزيائي يبدأ عند تفعيل حساب المورّد — التفاصيل في صفحة الشحن.</p></div>
-      <div class="step"><h3 data-i18n="infoRetT">الإرجاع والاستبدال</h3><p data-i18n="infoRetP">سياسة إرجاع واضحة لكل منتج — التفاصيل في صفحة الإرجاع والاستبدال.</p></div>
-      <div class="step"><h3 data-i18n="infoSupT">خدمة العملاء</h3><p data-i18n="infoSupP">راسلنا عبر إنستغرام @aiuhkot — نرد من المعلومات المؤكدة فقط.</p></div>
+    <div class="trust-row">
+      <div class="trust"><h3 data-i18n="trust1t">دفع آمن</h3><p data-i18n="trust1p">الدفع للمنتجات الرقمية عبر بوابة NOWPayments — لا نطلب بيانات بطاقتك أبداً.</p></div>
+      <div class="trust"><h3 data-i18n="trust2t">تسليم رقمي فوري</h3><p data-i18n="trust2p">المنتجات الرقمية تُسلَّم فور إتمام الدفع وتأكيده عند البوابة.</p></div>
+      <div class="trust"><h3 data-i18n="trust3t">سياسات واضحة</h3><p data-i18n="trust3p">شحن وإرجاع بسياسات مكتوبة ومعلنة قبل أن تطلب.</p></div>
+      <div class="trust"><h3 data-i18n="trust4t">دعم حقيقي</h3><p data-i18n="trust4p">راسلنا عبر إنستغرام @aiuhkot — نرد من معلومات مؤكدة فقط.</p></div>
     </div>
   </div>
 </section>
 
-<section id="how" style="background:var(--ink-2);border-top:1px solid var(--line)">
+<section id="reviewsSec" hidden>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="tag" data-i18n="reviewsTitle">آراء العملاء</div>
+      <h2 data-i18n="reviewsTitle">آراء العملاء</h2>
+      <p data-i18n="reviewsSub">آراء حقيقية من عملائنا.</p>
+    </div>
+    <div class="grid" id="reviewsGrid"></div>
+  </div>
+</section>
+
+<section id="faqsec" class="sec-alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="tag" data-i18n="faqTitle">الأسئلة الشائعة</div>
+      <h2 data-i18n="faqTitle">الأسئلة الشائعة</h2>
+      <p data-i18n="faqSub">إجابات من معلومات مؤكدة فقط.</p>
+    </div>
+    <div class="faq-list" id="faqList"></div>
+    <p style="margin-top:18px"><a href="faq.html" data-i18n="faqAllLink">كل الأسئلة الشائعة</a></p>
+  </div>
+</section>
+
+<section id="how">
   <div class="wrap">
     <div class="sec-head">
       <div class="tag" data-i18n="howTag">ببساطة</div>
       <h2 data-i18n="howTitle">كيف يعمل الشراء؟</h2>
-      <div class="divider"></div>
     </div>
     <div class="steps">
       <div class="step"><div class="num">1</div><h3 data-i18n="step1t">اختر منتجك</h3><p data-i18n="step1p">تصفّح الأقسام والمنتجات واختر ما يناسبك — اشتراك شهري أو دفعة واحدة.</p></div>
@@ -144,23 +165,22 @@
   </div>
 </section>
 
-<section id="notify">
+<section id="notify" class="sec-alt">
   <div class="wrap">
     <div class="sec-head">
-      <div class="tag" data-i18n="featuredTag">كن أول من يعرف</div>
+      <div class="tag" data-i18n="secNewTag">كن أول من يعرف</div>
       <h2 data-i18n="notifyFormT">سجّل إشعار التوفر</h2>
-      <div class="divider"></div>
     </div>
-    <form class="notify-form" id="notifyForm" novalidate>
+    <form class="form-card" id="notifyForm" novalidate style="margin:0">
       <label for="nfName" data-i18n="coName">الاسم الكامل</label>
       <input id="nfName" name="name" type="text" autocomplete="name" maxlength="60">
       <label for="nfContact" data-i18n="fContact">رقم الجوال أو البريد الإلكتروني</label>
       <input id="nfContact" name="contact" type="text" autocomplete="email" maxlength="80">
       <label for="nfProduct" data-i18n="fProduct">المنتج المهتم به</label>
       <select id="nfProduct" name="product"></select>
-      <button class="btn btn-solid" type="submit" style="width:100%" data-i18n="fSubmit">سجّل إشعاري</button>
+      <div class="co-nav"><button class="btn btn-solid" type="submit" style="flex:1" data-i18n="fSubmit">سجّل إشعاري</button></div>
       <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
-      <p style="color:var(--muted);font-size:13px" data-i18n="fNote">يُحفظ طلبك في متصفحك فقط حالياً — سيُربط بنظام إشعارات عند إطلاق البيع الفعلي.</p>
+      <p class="muted" style="font-size:13px" data-i18n="fNote">يُحفظ طلبك في متصفحك فقط حالياً — سيُربط بنظام إشعارات عند إطلاق البيع الفعلي.</p>
     </form>
   </div>
 </section>
@@ -168,9 +188,11 @@
 
 <footer id="siteFooter"></footer>
 
+<script src="config.js"></script>
 <script src="data.js"></script>
 <script src="i18n.js"></script>
 <script src="store.js"></script>
+<script src="viewer.js"></script>
 <script src="home.js"></script>
 <script src="app.js"></script>
 </body>

@@ -3,39 +3,56 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZAYRO STORE — Track order</title>
-<meta name="description" content="ZAYRO STORE — تتبّع الطلب · Track your order.">
+<title>ZAYRO STORE — تتبّع الطلب | Track order</title>
+<meta name="description" content="ZAYRO STORE — تتبّع طلبك برقم الطلب والرمز أو بالبريد الإلكتروني · Track your order by number + token, or by email.">
 <meta property="og:title" content="ZAYRO STORE — Track order">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#fbfbf9">
 <link rel="stylesheet" href="styles.css">
 <script>
-  try { var l = localStorage.getItem("zayro_lang"); if (l === "en") { document.documentElement.lang = "en"; document.documentElement.dir = "ltr"; document.documentElement.setAttribute("data-lang", "en"); } } catch (e) {}
+try{
+  var l=localStorage.getItem("zayro_lang");
+  if(!l){l=(navigator.language||"ar").toLowerCase().indexOf("ar")===0?"ar":"en";}
+  if(l==="en"){document.documentElement.lang="en";document.documentElement.dir="ltr";document.documentElement.setAttribute("data-lang","en");}
+  if(localStorage.getItem("zayro_theme")==="dark"){document.documentElement.setAttribute("data-theme","dark");}
+}catch(e){}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <header id="siteHeader"></header>
 <main>
   <div class="page-wrap">
-    <h1 data-i18n="trTitle">تتبّع الطلب</h1>
-    <form class="form-card" id="trForm" style="margin:0 0 30px">
-      <label for="trId" data-i18n="okOrderId">رقم الطلب</label>
+    <div class="sec-head"><h1 data-i18n="trTitle">تتبّع الطلب</h1></div>
+    <div class="admin-tabs" role="tablist">
+      <button type="button" class="active" id="modeIdBtn" data-i18n="trModeId">برقم الطلب والرمز</button>
+      <button type="button" id="modeEmailBtn" data-i18n="trModeEmail">بالبريد الإلكتروني</button>
+    </div>
+    <form class="form-card" id="trForm" novalidate>
+      <label for="trId" data-i18n="trModeId">برقم الطلب والرمز</label>
       <input id="trId" type="text" data-i18n-ph="trIdPh" placeholder="رقم الطلب (مثال ZY-2026-0001)" maxlength="20">
       <label for="trToken" data-i18n="okToken">رمز الوصول (احتفظ به سراً)</label>
       <input id="trToken" type="text" data-i18n-ph="trTokenPh" placeholder="رمز الوصول" maxlength="20">
-      <button class="btn btn-solid" type="submit" style="width:100%" data-i18n="trBtn">عرض الحالة</button>
       <p class="form-msg" id="trMsg" role="status" aria-live="polite"></p>
+      <div class="co-nav"><button class="btn btn-solid" type="submit" style="flex:1" data-i18n="trBtn">عرض الحالة</button></div>
     </form>
-    <div id="trResult"></div>
+    <form class="form-card" id="trEmailForm" novalidate hidden style="margin-top:18px">
+      <label for="trEmail" data-i18n="coEmail">البريد الإلكتروني</label>
+      <input id="trEmail" type="email" data-i18n-ph="trEmailPh" placeholder="البريد الإلكتروني المستخدم في الطلب" maxlength="80">
+      <p class="form-msg" id="trEmailMsg" role="status" aria-live="polite"></p>
+      <div class="co-nav"><button class="btn btn-solid" type="submit" style="flex:1" data-i18n="trBtn">عرض الحالة</button></div>
+    </form>
+    <div id="trResult" style="margin-top:26px"></div>
   </div>
 </main>
 <footer id="siteFooter"></footer>
+<script src="config.js"></script>
 <script src="data.js"></script>
 <script src="i18n.js"></script>
 <script src="store.js"></script>
+<script src="viewer.js"></script>
 <script src="track.js"></script>
 <script src="app.js"></script>
 </body>

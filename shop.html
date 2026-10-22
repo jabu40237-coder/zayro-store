@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZAYRO STORE — المتجر | Shop</title>
+<meta name="description" content="ZAYRO STORE shop — كل المنتجات مع البحث والتصفية والترتيب · All products with live search, filters and sorting.">
+<meta property="og:title" content="ZAYRO STORE — Shop">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://jabu40237-coder.github.io/zayro-store/shop.html">
+<meta name="theme-color" content="#fbfbf9">
+<link rel="stylesheet" href="styles.css">
+<script>
+try{
+  var l=localStorage.getItem("zayro_lang");
+  if(!l){l=(navigator.language||"ar").toLowerCase().indexOf("ar")===0?"ar":"en";}
+  if(l==="en"){document.documentElement.lang="en";document.documentElement.dir="ltr";document.documentElement.setAttribute("data-lang","en");}
+  if(localStorage.getItem("zayro_theme")==="dark"){document.documentElement.setAttribute("data-theme","dark");}
+}catch(e){}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header id="siteHeader"></header>
+<main>
+  <div class="page-wrap">
+    <div class="sec-head">
+      <div class="tag" data-i18n="navShop">المتجر</div>
+      <h1 data-i18n="shopTitle">المتجر</h1>
+      <p data-i18n="shopSub">كل منتجات المتجر — ابحث، صفِّ، ورتِّب. الأسعار بالريال السعودي أساساً.</p>
+      <p class="approx-note" data-i18n="approxNote">الأسعار بعملات أخرى تقريبية للعرض فقط — إتمام الطلب بالأسعار الأصلية وروابط الدفع الأصلية.</p>
+    </div>
+    <div class="toolbar">
+      <div class="search-box">
+        <input type="search" id="shopSearch" data-i18n-ph="searchPh" placeholder="ابحث عن منتج…" aria-label="Search products">
+      </div>
+      <label for="catFilter" data-i18n="filterCat">القسم</label>
+      <select id="catFilter"></select>
+      <label for="statusFilter" data-i18n="filterStatus">الحالة</label>
+      <select id="statusFilter">
+        <option value="all" data-i18n="stAll">الكل</option>
+        <option value="available" data-i18n="stAvailable">متاح للشراء</option>
+        <option value="notify" data-i18n="stNotify">قريباً — أعلمني</option>
+        <option value="unavailable" data-i18n="stUnavailable">غير متاح حالياً</option>
+      </select>
+      <label for="priceFilter" data-i18n="filterPrice">السعر</label>
+      <select id="priceFilter">
+        <option value="any" data-i18n="priceAny">كل الأسعار</option>
+        <option value="u50" data-i18n="priceU50">أقل من 50 ر.س</option>
+        <option value="50-100" data-i18n="price50to100">50 – 100 ر.س</option>
+        <option value="o100" data-i18n="priceO100">أكثر من 100 ر.س</option>
+      </select>
+      <label for="sortSel" data-i18n="filterSort">الترتيب</label>
+      <select id="sortSel">
+        <option value="newest" data-i18n="sortNew">الأحدث أولاً</option>
+        <option value="asc" data-i18n="sortPriceAsc">السعر: من الأقل</option>
+        <option value="desc" data-i18n="sortPriceDesc">السعر: من الأعلى</option>
+        <option value="name" data-i18n="sortName">الاسم</option>
+      </select>
+    </div>
+    <div class="grid" id="shopGrid"></div>
+    <p class="empty-msg" id="shopEmpty" style="display:none" data-i18n="empty">لا توجد منتجات مطابقة لبحثك.</p>
+  </div>
+</main>
+<footer id="siteFooter"></footer>
+<script src="config.js"></script>
+<script src="data.js"></script>
+<script src="i18n.js"></script>
+<script src="store.js"></script>
+<script src="viewer.js"></script>
+<script src="shop.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -3,32 +3,45 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZAYRO STORE — Error</title>
-<meta name="description" content="ZAYRO STORE — حدث خطأ · Something went wrong.">
+<title>ZAYRO STORE — حدث خطأ | Error</title>
+<meta name="description" content="ZAYRO STORE — لم يكتمل إنشاء الطلب · The order could not be created.">
 <meta property="og:title" content="ZAYRO STORE — Error">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#ffffff">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#fbfbf9">
 <link rel="stylesheet" href="styles.css">
 <script>
-  try { var l = localStorage.getItem("zayro_lang"); if (l === "en") { document.documentElement.lang = "en"; document.documentElement.dir = "ltr"; document.documentElement.setAttribute("data-lang", "en"); } } catch (e) {}
+try{
+  var l=localStorage.getItem("zayro_lang");
+  if(!l){l=(navigator.language||"ar").toLowerCase().indexOf("ar")===0?"ar":"en";}
+  if(l==="en"){document.documentElement.lang="en";document.documentElement.dir="ltr";document.documentElement.setAttribute("data-lang","en");}
+  if(localStorage.getItem("zayro_theme")==="dark"){document.documentElement.setAttribute("data-theme","dark");}
+}catch(e){}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <header id="siteHeader"></header>
 <main>
-  <div class="page-wrap" style="text-align:center">
-    <h1 data-i18n="errTitle">حدث خطأ</h1>
-    <p class="sub" style="max-width:640px;margin:0 auto 26px" data-i18n="errText">لم يكتمل إنشاء الطلب. لم يتم أي دفع من هذه الصفحة — حاول مجدداً أو راسلنا على إنستغرام @aiuhkot.</p>
-    <a class="btn btn-ghost" href="index.html" data-i18n="backHome">العودة للرئيسية</a>
+  <div class="page-wrap">
+    <div class="sec-head"><h1 data-i18n="errTitle">حدث خطأ</h1></div>
+    <div class="form-card">
+      <p data-i18n="errText">لم يكتمل إنشاء الطلب. لم يتم أي دفع من هذه الصفحة — حاول مجدداً أو راسلنا على إنستغرام @aiuhkot.</p>
+      <div class="co-nav">
+        <a class="btn btn-solid" href="checkout.html" data-i18n="coTitle">إتمام الطلب</a>
+        <a class="btn btn-ghost" href="index.html" data-i18n="backHome">العودة للرئيسية</a>
+      </div>
+    </div>
   </div>
 </main>
 <footer id="siteFooter"></footer>
+<script src="config.js"></script>
 <script src="data.js"></script>
 <script src="i18n.js"></script>
 <script src="store.js"></script>
+<script src="viewer.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
