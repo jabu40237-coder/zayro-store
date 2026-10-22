@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZAYRO STORE — Admin Prototype</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0a0a0c">
+<link rel="stylesheet" href="styles.css">
+<script>
+  try { var l = localStorage.getItem("zayro_lang"); if (l === "en") { document.documentElement.lang = "en"; document.documentElement.dir = "ltr"; document.documentElement.setAttribute("data-lang", "en"); } } catch (e) {}
+</script>
+</head>
+<body>
+<header id="siteHeader"></header>
+<main>
+  <div class="page-wrap">
+    <h1 data-i18n="adminTitle">لوحة إدارة ZAYRO STORE (نموذج أولي)</h1>
+    <!-- NON-REMOVABLE PROTOTYPE WARNING — hardcoded in markup on purpose. -->
+    <div class="admin-banner" data-i18n="adminBanner">نموذج أولي محلي بدون مصادقة خادم — غير آمن للإنتاج. المصادقة الحقيقية وصلاحيات الإدارة تتطلب مرحلة الخادم الخلفي.</div>
+
+    <div class="chips" style="justify-content:flex-start;margin-bottom:22px">
+      <button class="chip-btn active" type="button" data-tab="products" data-i18n="adminProducts">المنتجات</button>
+      <button class="chip-btn" type="button" data-tab="orders" data-i18n="adminOrders">الطلبات</button>
+      <button class="chip-btn" type="button" data-tab="coupons" data-i18n="adminCoupons">الكوبونات</button>
+      <button class="chip-btn" type="button" data-tab="home" data-i18n="adminHome">محتوى الرئيسية</button>
+      <button class="chip-btn" type="button" data-tab="summary" data-i18n="adminSummary">ملخص المبيعات والهامش</button>
+    </div>
+
+    <section id="tab-products">
+      <div id="adminProductList"></div>
+      <div class="form-card" style="margin:24px 0;max-width:720px">
+        <h3 style="margin-bottom:14px" data-i18n="adminAdd">إضافة منتج</h3>
+        <label>ID</label><input id="npId" type="text" maxlength="24" placeholder="ZY-NEW">
+        <label data-i18n="adminColName">المنتج</label><input id="npNameAr" type="text" maxlength="80" placeholder="الاسم بالعربية">
+        <input id="npNameEn" type="text" maxlength="80" placeholder="Name in English">
+        <label data-i18n="adminColPrice">السعر (ر.س)</label><input id="npPrice" type="number" min="1" step="1">
+        <label data-i18n="adminColStatus">الحالة</label>
+        <select id="npStatus">
+          <option value="notify">notify</option>
+          <option value="available">available</option>
+          <option value="unavailable">unavailable</option>
+        </select>
+        <button class="btn btn-solid" type="button" id="npAdd" data-i18n="adminAdd">إضافة منتج</button>
+        <p class="form-msg" id="npMsg" role="status"></p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
+        <button class="btn btn-ghost" type="button" id="expBtn" data-i18n="adminExport">تصدير JSON</button>
+        <label class="btn btn-ghost" style="cursor:pointer"><span data-i18n="adminImport">استيراد JSON</span><input id="impFile" type="file" accept="application/json" style="display:none"></label>
+        <button class="btn btn-ghost" type="button" id="resetBtn" data-i18n="adminReset">إعادة تعيين للبيانات الأصلية</button>
+      </div>
+    </section>
+
+    <section id="tab-orders" style="display:none"><div id="adminOrders"></div></section>
+
+    <section id="tab-coupons" style="display:none">
+      <div id="adminCoupons"></div>
+      <div class="form-card" style="margin:24px 0;max-width:520px">
+        <label data-i18n="adminCouponCode">الرمز</label><input id="cpCode" type="text" maxlength="20">
+        <label data-i18n="adminCouponPct">نسبة الخصم %</label><input id="cpPct" type="number" min="1" max="90" step="1">
+        <button class="btn btn-solid" type="button" id="cpAdd" data-i18n="adminCouponAdd">إضافة كوبون</button>
+      </div>
+      <p style="color:var(--muted);font-size:14px" data-i18n="adminCouponsNote">الكوبونات محلية تجريبية — لا تُطبَّق على روابط دفع NOWPayments الثابتة إلا في مرحلة الخادم.</p>
+    </section>
+
+    <section id="tab-home" style="display:none">
+      <div class="form-card" style="margin:0;max-width:520px">
+        <label><input type="checkbox" id="hfFeatured" style="width:auto;margin-inline-end:8px"><span data-i18n="adminShowFeatured">إظهار قسم المميزة</span></label><br>
+        <label><input type="checkbox" id="hfNew" style="width:auto;margin-inline-end:8px"><span data-i18n="adminShowNew">إظهار قسم قريباً</span></label><br>
+        <label><input type="checkbox" id="hfHow" style="width:auto;margin-inline-end:8px"><span data-i18n="adminShowHow">إظهار قسم كيف تشتري</span></label>
+      </div>
+    </section>
+
+    <section id="tab-summary" style="display:none"><div id="adminSummary"></div>
+      <p style="color:var(--muted);font-size:14px;margin-top:14px" data-i18n="adminSumNote">ملخص محسوب من الطلبات المخزنة محلياً في هذا المتصفح فقط — ليس بيانات مبيعات خادم. هوامش المنتجات الرقمية ≈ كامل السعر ناقص رسوم البوابة؛ تكاليف المورّد للفيزيائية تُسجل عند تفعيل التوريد.</p>
+    </section>
+  </div>
+</main>
+<footer id="siteFooter"></footer>
+<script src="data.js"></script>
+<script src="i18n.js"></script>
+<script src="store.js"></script>
+<script src="admin.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

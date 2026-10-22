@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZAYRO STORE — Order created</title>
+<meta name="description" content="ZAYRO STORE — تم إنشاء الطلب · Order created, pending payment verification.">
+<meta property="og:title" content="ZAYRO STORE — Order created">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0a0a0c">
+<link rel="stylesheet" href="styles.css">
+<script>
+  try { var l = localStorage.getItem("zayro_lang"); if (l === "en") { document.documentElement.lang = "en"; document.documentElement.dir = "ltr"; document.documentElement.setAttribute("data-lang", "en"); } } catch (e) {}
+</script>
+</head>
+<body>
+<header id="siteHeader"></header>
+<main>
+  <div class="page-wrap" style="text-align:center">
+    <h1 data-i18n="okTitle">تم إنشاء طلبك — بانتظار التحقق من الدفع</h1>
+    <p class="sub" style="max-width:640px;margin:0 auto 26px" data-i18n="okText">رقم طلبك أدناه. أكمل الدفع في نوافذ NOWPayments التي فُتحت، واحتفظ برقم الطلب ورمز الوصول لتتبّع الحالة. الحالة ستتحدث إلى «مدفوع» فقط بعد تحقق الخادم من إشعار الدفع (IPN) — هذه الصفحة لا تؤكد الدفع بنفسها.</p>
+    <div class="form-card" style="text-align:center">
+      <div style="color:var(--muted)" data-i18n="okOrderId">رقم الطلب</div>
+      <div class="big-id" id="okId">—</div>
+      <div style="color:var(--muted);margin-top:16px" data-i18n="okToken">رمز الوصول (احتفظ به سراً)</div>
+      <div class="big-id" id="okToken">—</div>
+      <a class="btn btn-solid" id="okTrack" href="track.html" style="margin-top:22px" data-i18n="trackBtn">تتبّع الطلب</a>
+    </div>
+    <p style="margin-top:26px"><a href="index.html" data-i18n="backHome">العودة للرئيسية</a></p>
+  </div>
+</main>
+<footer id="siteFooter"></footer>
+<script src="data.js"></script>
+<script src="i18n.js"></script>
+<script src="store.js"></script>
+<script>
+  window.ZayroPage = { init: function () {
+    var q = new URLSearchParams(window.location.search);
+    var id = q.get("id") || "—", token = q.get("token") || "—";
+    document.getElementById("okId").textContent = id;
+    document.getElementById("okToken").textContent = token;
+    document.getElementById("okTrack").href = "track.html?id=" + encodeURIComponent(id) + "&token=" + encodeURIComponent(token);
+  } };
+</script>
+<script src="app.js"></script>
+</body>
+</html>
